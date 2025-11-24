@@ -1,0 +1,81 @@
+add a field where the user will get a toggle button on and off. it stores if user is selling or buying.
+next add a field for storing all the auctions.
+each tractor auction has the following variables:
+
+current bid:
+and other variables u think are required for the auction saving (live auction feature.)
+
+each auction item will have:
+
+(required)
+cover image = string/img idk (similar to how avatar is stored)
+
+(optional)
+more images = up to 6 images per auction item
+
+(required)
+category - regular/harvester/preapproved/scrap
+if its regular/harvester, brand category (dropdownmeu with options)
+
+Checkbox Options (optional all):
+Battery
+Bumper
+Draw Bar
+Insurance
+Itch
+NOC Papers
+Ready for Token
+Top
+
+(optional):
+IPTO = yes/no (dropdown)
+
+(required):
+clutch = dual/single (dropdown)
+
+(required):
+Condition = push start/self start/towing (dropdown)
+
+(optional):
+gear box = collarshift/constant/other/semi-constact/sliding/synchro
+
+(required):
+steering = mechanical/power
+
+(required):
+drive = 2WD/4WD
+
+(rquired):
+hp (horsepower) = number
+
+(optional):
+mfg year = year
+
+(required) - (only for preapproved/scrap)
+price = number
+
+(required):
+hours run = number
+
+(required)
+registration number = string
+
+(optional)
+tyres = string
+
+(optional)
+tyre % = number
+
+(optional)
+state = a state from india. (dropdown)
+
+(required - connected)
+vendor = the user who posted this
+
+(optional)
+verified = true/false
+
+(optional)
+exp date = year
+
+link them to a user. 
