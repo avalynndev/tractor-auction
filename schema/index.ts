@@ -60,6 +60,9 @@ export const auction = pgTable("auction", {
     .notNull()
     .references(() => user.id, { onDelete: "cascade" }),
 
+  title: text("title").notNull(),
+  description: text("description"),
+
   coverImage: text("cover_image").notNull(),
   image1: text("image1"),
   image2: text("image2"),

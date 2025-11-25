@@ -37,7 +37,7 @@ export default function HomePage() {
           <div className="relative z-10 flex flex-col items-center justify-center text-center h-full px-6">
             <h1 className="font-breakfast text-[44px] font-black max-w-3xl sm:text-6xl md:text-8xl text-background dark:text-foreground">
               Find Your
-              <MorphingTextWithSkeleton delay={100}>
+              <MorphingTextWithSkeleton delay={150}>
                 <MorphingText texts={["Best", "Right", "Next"]} />
               </MorphingTextWithSkeleton>
               Tractor

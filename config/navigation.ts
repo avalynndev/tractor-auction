@@ -26,10 +26,3 @@ export const NavigationLinks: NavigationLink[] = [
     label: "Policy",
   },
 ];
-
-export const authLinks = {
-  getStarted: {
-    href: "/",
-    label: "Sign Up",
-  },
-};

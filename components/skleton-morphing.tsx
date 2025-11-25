@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Skeleton } from "./ui/skeleton";
+import { motion, AnimatePresence } from "framer-motion";
 
 export function MorphingTextWithSkeleton({
   children,
@@ -13,17 +13,37 @@ export function MorphingTextWithSkeleton({
   const [showChildren, setShowChildren] = React.useState(false);
 
   React.useEffect(() => {
-    const t = setTimeout(() => setShowChildren(true), delay);
-    return () => clearTimeout(t);
+    const timeout = setTimeout(() => {
+      setShowChildren(true);
+    }, delay);
+    return () => clearTimeout(timeout);
   }, [delay]);
 
   return (
-    <span>
-      {showChildren ? (
-        <span className="fade-in">{children}</span>
-      ) : (
-        <Skeleton className="h-20 m-2"/>
-      )}
+    <span className="relative">
+      <AnimatePresence mode="wait">
+        {!showChildren ? (
+          <motion.h1
+            key="initial-text"
+            initial={{ opacity: 1 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="font-breakfast text-[44px] font-black max-w-3xl sm:text-6xl md:text-8xl text-background dark:text-foreground"
+          >
+            BEST
+          </motion.h1>
+        ) : (
+          <motion.span
+            key="children-text"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.2, ease: "easeIn" }}
+          >
+            {children}
+          </motion.span>
+        )}
+      </AnimatePresence>
     </span>
   );
 }

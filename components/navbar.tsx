@@ -1,4 +1,8 @@
 "use client";
+import { db } from "@/db";
+import { useSession } from "@/lib/auth-client";
+import { user } from "@/schema";
+import { eq } from "drizzle-orm";
 import React, { useEffect, useState } from "react";
 import { Link } from "next-view-transitions";
 import FadeImage from "@/components/ui/fade-image";
@@ -10,10 +14,14 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { ThemeToggle } from "./theme-toggle";
-import { NavigationLinks, authLinks } from "@/config/navigation";
+import { NavigationLinks } from "@/config/navigation";
 import { UserButton } from "@/components/user-button";
 
+import { Switch } from "./ui/switch";
+
 const Navbar = () => {
+
+  const [checked, setChecked] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -56,14 +64,14 @@ const Navbar = () => {
               data-slot="navbar-right"
               className="lg:pt-5 flex items-center justify-end gap-4"
             >
-              <Link
-                href={authLinks.getStarted.href}
+              <div
                 data-slot="button"
-                className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 text-primary-foreground shadow-sm dark:hover:from-primary/80 hover:from-primary/70 dark:hover:to-primary/70 hover:to-primary/90 bg-linear-to-b from-primary/60 to-primary dark:from-primary dark:to-primary/70 border-t-primary h-9 px-4 py-2"
+                className="inline-flex items-center gap-3 justify-center whitespace-nowrap rounded-md text-sm dark:text-foreground font-medium transition-colors focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 text-primary-foreground shadow-sm dark:hover:from-secondary/80 hover:from-secondary/70 dark:hover:to-secondary/70 hover:to-secondary/90 bg-linear-to-b from-secondary/60 to-secondary dark:from-secondary dark:to-secondary/70 border-t-secondary h-9 px-4 py-2"
               >
-                {authLinks.getStarted.label}
-              </Link>
-              <UserButton/>
+                <span>{checked ? "Bidder" : "Dealer"}</span>
+                <Switch checked={checked} onCheckedChange={setChecked} />
+              </div>
+              <UserButton />
 
               <div className="lg:hidden">
                 <Sheet>
