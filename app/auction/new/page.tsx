@@ -5,7 +5,6 @@ import { useSession } from "@/lib/auth-client";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { createAuction } from "@/actions/createAuction";
-import { auction } from "@/schema";
 import {
   Card,
   CardContent,
@@ -26,7 +25,16 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Loader2, Upload, X, ImagePlus } from "lucide-react";
+import { Clock, Loader2, X } from "lucide-react";
+import ImageUpload from "@/components/upload-thing";
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
+import { CalendarIcon } from "lucide-react";
+import { format } from "date-fns";
 
 const CLUTCH_OPTIONS = ["dual", "single"] as const;
 const CONDITION_OPTIONS = ["push_start", "self_start", "towing"] as const;
@@ -85,11 +93,8 @@ type NullableString = string | null;
 export default function AddAuctionPage() {
   const { data: session } = useSession();
   const router = useRouter();
-  const coverInputRef = useRef<HTMLInputElement | null>(null);
-  const additionalInputRef = useRef<HTMLInputElement | null>(null);
-  const [currentImageIndex, setCurrentImageIndex] = useState<number | null>(
-    null
-  );
+  const [endingDate, setEndingDate] = useState<Date>();
+  const [endingTime, setEndingTime] = useState<string>("");
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -98,12 +103,6 @@ export default function AddAuctionPage() {
   const [brand, setBrand] = useState("");
 
   const [coverImage, setCoverImage] = useState<NullableString>(null);
-  const [image1, setImage1] = useState<NullableString>(null);
-  const [image2, setImage2] = useState<NullableString>(null);
-  const [image3, setImage3] = useState<NullableString>(null);
-  const [image4, setImage4] = useState<NullableString>(null);
-  const [image5, setImage5] = useState<NullableString>(null);
-  const [image6, setImage6] = useState<NullableString>(null);
 
   const [battery, setBattery] = useState(false);
   const [bumper, setBumper] = useState(false);
@@ -154,57 +153,14 @@ export default function AddAuctionPage() {
     });
   };
 
-  const handleImageSelect = async (
-    e: React.ChangeEvent<HTMLInputElement>,
-    isCover: boolean = false
-  ) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+  const [additionalImages, setAdditionalImages] = useState<string[]>([]);
 
-    if (!file.type.startsWith("image/")) {
-      toast.error("Please select an image file");
-      return;
-    }
+  const [hours, minutes] = endingTime.split(":").map(Number);
 
-    try {
-      const base64 = await convertFileToBase64(file);
-
-      if (isCover) {
-        setCoverImage(base64);
-        toast.success("Cover image added");
-      } else if (currentImageIndex !== null) {
-        const setters = [
-          setImage1,
-          setImage2,
-          setImage3,
-          setImage4,
-          setImage5,
-          setImage6,
-        ];
-        setters[currentImageIndex](base64);
-        toast.success("Image added");
-        setCurrentImageIndex(null);
-      }
-    } catch (e: any) {
-      toast.error(e.message || "Failed to read image");
-    }
-
-    e.target.value = "";
-  };
-
-  const removeImage = (index: number) => {
-    const setters = [
-      setImage1,
-      setImage2,
-      setImage3,
-      setImage4,
-      setImage5,
-      setImage6,
-    ];
-    setters[index](null);
-  };
-
-  const additionalImages = [image1, image2, image3, image4, image5, image6];
+  const finalEndingDate = new Date(endingDate!);
+  finalEndingDate.setHours(hours);
+  finalEndingDate.setMinutes(minutes);
+  finalEndingDate.setSeconds(0);
 
   const validate = () => {
     if (!session?.user?.id) return "You must be logged in to create an auction";
@@ -218,6 +174,11 @@ export default function AddAuctionPage() {
     if (!horsepower.trim()) return "Horsepower is required";
     if (!hoursRun.trim()) return "Hours run is required";
     if (!registrationNumber.trim()) return "Registration number is required";
+    if (!endingDate || !endingTime) {
+      toast.error("Please select both date and time");
+      return;
+    }
+
     if ((category === "preapproved" || category === "scrap") && !price.trim())
       return "Price is required for preapproved/scrap";
     return null;
@@ -232,6 +193,15 @@ export default function AddAuctionPage() {
 
     setSubmitting(true);
 
+    const allImages = [...additionalImages];
+
+    const img1 = allImages[0] ?? null;
+    const img2 = allImages[1] ?? null;
+    const img3 = allImages[2] ?? null;
+    const img4 = allImages[3] ?? null;
+    const img5 = allImages[4] ?? null;
+    const img6 = allImages[5] ?? null;
+
     try {
       await createAuction({
         id: crypto.randomUUID(),
@@ -242,12 +212,12 @@ export default function AddAuctionPage() {
         brand: brand.trim() || null,
 
         coverImage: coverImage!,
-        image1,
-        image2,
-        image3,
-        image4,
-        image5,
-        image6,
+        image1: additionalImages[0] ?? null,
+        image2: additionalImages[1] ?? null,
+        image3: additionalImages[2] ?? null,
+        image4: additionalImages[3] ?? null,
+        image5: additionalImages[4] ?? null,
+        image6: additionalImages[5] ?? null,
 
         battery,
         bumper,
@@ -274,18 +244,14 @@ export default function AddAuctionPage() {
         state: state || null,
         verified,
         expYear: expYear || null,
+        endingAt: finalEndingDate.toISOString(),
       });
 
       setTitle("");
       setDescription("");
       setBrand("");
       setCoverImage(null);
-      setImage1(null);
-      setImage2(null);
-      setImage3(null);
-      setImage4(null);
-      setImage5(null);
-      setImage6(null);
+      setAdditionalImages([""]);
       setBattery(false);
       setBumper(false);
       setDrawBar(false);
@@ -310,6 +276,8 @@ export default function AddAuctionPage() {
       setState("");
       setVerified(false);
       setExpYear("");
+      setEndingTime("")
+      setEndingDate(undefined)
 
       router.refresh();
       toast.success("Auction submitted successfully! 🚀");
@@ -382,9 +350,48 @@ export default function AddAuctionPage() {
                 rows={3}
               />
             </div>
+
+            <div className="flex flex-col gap-2">
+              <label className="font-medium">Ending Date</label>
+
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className="w-full justify-start text-left font-normal"
+                  >
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {endingDate ? format(endingDate, "PPP") : "Pick a date"}
+                  </Button>
+                </PopoverTrigger>
+
+                <PopoverContent className="w-auto p-0">
+                  <Calendar
+                    mode="single"
+                    selected={endingDate}
+                    onSelect={setEndingDate}
+                    disabled={(date) => date < new Date()}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <label className="font-medium">Ending Time</label>
+
+              <div className="relative">
+                <Input
+                  type="time"
+                  value={endingTime}
+                  required
+                  className=""
+                  onChange={(e) => setEndingTime(e.target.value)}
+                />
+              </div>
+            </div>
           </CardContent>
         </Card>
-
         <Card>
           <CardHeader>
             <CardTitle>Images</CardTitle>
@@ -395,124 +402,78 @@ export default function AddAuctionPage() {
           <CardContent className="grid gap-6">
             <div className="grid gap-3">
               <Label>Cover Image *</Label>
-              <div
-                onClick={() => !coverImage && coverInputRef.current?.click()}
-                className={`relative border-2 border-dashed rounded-lg overflow-hidden transition-all ${
-                  coverImage
-                    ? "border-muted-foreground"
-                    : "border-muted-foreground cursor-pointer bg-muted"
-                } aspect-video`}
-              >
-                {coverImage ? (
-                  <>
+
+              {coverImage ? (
+                <div className="relative border-2 border-muted-foreground rounded-lg overflow-hidden aspect-video">
+                  <img
+                    src={coverImage}
+                    alt="Cover"
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-black/0 hover:bg-black/40 transition-all flex items-center justify-center gap-2 opacity-0 hover:opacity-100">
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant="destructive"
+                      onClick={() => setCoverImage(null)}
+                    >
+                      <X className="h-4 w-4 mr-2" />
+                      Remove
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <ImageUpload setUrl={(url) => setCoverImage(url)} cover />
+              )}
+            </div>
+
+            <div className="grid gap-3">
+              <Label>Additional Images (Optional)</Label>
+              <p className="text-sm text-muted-foreground">
+                Upload up to 6 additional images
+              </p>
+
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                {additionalImages.map((image, index) => (
+                  <div
+                    key={index}
+                    className="relative border-2 border-muted-foreground rounded-lg overflow-hidden aspect-video"
+                  >
                     <img
-                      src={coverImage}
-                      alt="Cover"
+                      src={image}
+                      alt={`Additional ${index + 1}`}
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-black/0 hover:bg-black/40 transition-all flex items-center justify-center gap-2 opacity-0 hover:opacity-100">
-                      <Button
-                        type="button"
-                        size="sm"
-                        variant="secondary"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          coverInputRef.current?.click();
-                        }}
-                      >
-                        <Upload className="h-4 w-4 mr-2" />
-                        Change
-                      </Button>
+                    <div className="absolute inset-0 bg-black/0 hover:bg-black/40 transition-all flex items-center justify-center opacity-0 hover:opacity-100">
                       <Button
                         type="button"
                         size="sm"
                         variant="destructive"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setCoverImage(null);
+                        onClick={() => {
+                          setAdditionalImages(
+                            additionalImages.filter((_, i) => i !== index)
+                          );
                         }}
                       >
                         <X className="h-4 w-4 mr-2" />
                         Remove
                       </Button>
                     </div>
-                  </>
-                ) : (
-                  <div className="flex flex-col items-center justify-center h-full p-6">
-                    <ImagePlus className="h-12 w-12 mb-3 " />
-                    <p className="text-sm font-medium">
-                      Click to upload cover image
-                    </p>
-                    <p className="text-xs mt-1 text-muted-foreground">
-                      PNG, JPG, WEBP up to 10MB
-                    </p>
+                  </div>
+                ))}
+
+                {additionalImages.length < 6 && (
+                  <div className="rounded-lg aspect-video">
+                    <ImageUpload
+                      setUrl={(url) => {
+                        if (additionalImages.length < 6) {
+                          setAdditionalImages([...additionalImages, url]);
+                        }
+                      }}
+                    />
                   </div>
                 )}
               </div>
-              <input
-                ref={coverInputRef}
-                type="file"
-                accept="image/*"
-                onChange={(e) => handleImageSelect(e, true)}
-                className="hidden"
-              />
-            </div>
-
-            <div className="grid gap-3">
-              <Label>Additional Images</Label>
-              <div className="grid grid-cols-3 gap-3">
-                {additionalImages.map((img, i) => (
-                  <div
-                    key={i}
-                    onClick={() => {
-                      if (!img) {
-                        setCurrentImageIndex(i);
-                        additionalInputRef.current?.click();
-                      }
-                    }}
-                    className={`relative border-2 border-dashed rounded-lg overflow-hidden transition-all aspect-video ${
-                      img
-                        ? "border-muted"
-                        : "border-muted-foreground cursor-pointer bg-muted"
-                    }`}
-                  >
-                    {img ? (
-                      <>
-                        <img
-                          src={img}
-                          alt={`Image ${i + 1}`}
-                          className="w-full h-full object-cover"
-                        />
-                        <div className="absolute inset-0 bg-black/0 hover:bg-black/50 transition-all flex items-center justify-center opacity-0 hover:opacity-100">
-                          <Button
-                            type="button"
-                            size="sm"
-                            variant="destructive"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              removeImage(i);
-                            }}
-                          >
-                            <X className="h-3 w-3" />
-                          </Button>
-                        </div>
-                      </>
-                    ) : (
-                      <div className="flex flex-col items-center justify-center h-full text-muted-foreground">
-                        <ImagePlus className="h-8 w-8 mb-1" />
-                        <p className="text-xs">Add image</p>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-              <input
-                ref={additionalInputRef}
-                type="file"
-                accept="image/*"
-                onChange={(e) => handleImageSelect(e, false)}
-                className="hidden"
-              />
             </div>
           </CardContent>
         </Card>
@@ -537,14 +498,14 @@ export default function AddAuctionPage() {
                   </SelectTrigger>
                   <SelectContent>
                     {CLUTCH_OPTIONS.map((o) => {
-                       const label = o.replace(/\b\w/g, (c) => c.toUpperCase());
+                      const label = o.replace(/\b\w/g, (c) => c.toUpperCase());
 
                       return (
                         <SelectItem key={o} value={o}>
                           {label}
                         </SelectItem>
                       );
-})}
+                    })}
                   </SelectContent>
                 </Select>
               </div>

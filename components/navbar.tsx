@@ -1,8 +1,4 @@
 "use client";
-import { db } from "@/db";
-import { useSession } from "@/lib/auth-client";
-import { user } from "@/schema";
-import { eq } from "drizzle-orm";
 import React, { useEffect, useState } from "react";
 import { Link } from "next-view-transitions";
 import FadeImage from "@/components/ui/fade-image";
@@ -17,21 +13,75 @@ import { ThemeToggle } from "./theme-toggle";
 import { NavigationLinks } from "@/config/navigation";
 import { UserButton } from "@/components/user-button";
 
+import { getUserMode, updateUserMode } from "@/actions/userMode";
 import { Switch } from "./ui/switch";
+import { Skeleton } from "./ui/skeleton"; // shadcn skeleton
+import { useSession } from "@/lib/auth-client";
 
 const Navbar = () => {
-
-  const [checked, setChecked] = useState(true);
+  const [checked, setChecked] = useState<boolean | null>(null); // null = loading
+  const [isCooldown, setIsCooldown] = useState(false);
+  const [tooltip, setTooltip] = useState("");
   const [isScrolled, setIsScrolled] = useState(false);
+
+  const { data: session } = useSession();
+
+  // Load mode and cooldown on mount
+  useEffect(() => {
+    async function loadMode() {
+      setChecked(null); // start loading
+      const savedMode = localStorage.getItem("user-mode");
+      if (savedMode !== null) setChecked(savedMode === "true");
+
+      if (session?.user?.id) {
+        const mode = await getUserMode(session.user.id);
+        setChecked(mode);
+        localStorage.setItem("user-mode", String(mode));
+      }
+
+      // Check cooldown
+      const lastToggle = localStorage.getItem("user-mode-last-toggle");
+      if (lastToggle) {
+        const lastTime = parseInt(lastToggle, 10);
+        const now = Date.now();
+        const diff = now - lastTime;
+        if (diff < 10000) {
+          setIsCooldown(true);
+          setTimeout(() => setIsCooldown(false), 10000 - diff);
+        }
+      }
+    }
+
+    loadMode();
+  }, [session]);
+
+  const handleModeToggle = async (value: boolean) => {
+    if (isCooldown) {
+      setTooltip("You can only change once every 10 seconds");
+      setTimeout(() => setTooltip(""), 2000);
+      return;
+    }
+
+    setChecked(value);
+    localStorage.setItem("user-mode", String(value));
+
+    if (session?.user?.id) {
+      await updateUserMode(session.user.id, value);
+    }
+
+    // Start cooldown and save timestamp
+    const now = Date.now();
+    localStorage.setItem("user-mode-last-toggle", String(now));
+    setIsCooldown(true);
+    setTimeout(() => setIsCooldown(false), 10000);
+
+    window.location.reload();
+  };
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 10);
-
     window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
@@ -62,15 +112,31 @@ const Navbar = () => {
             </nav>
             <nav
               data-slot="navbar-right"
-              className="lg:pt-5 flex items-center justify-end gap-4"
+              className="lg:pt-5 flex items-center justify-end gap-4 relative"
             >
               <div
                 data-slot="button"
-                className="inline-flex items-center gap-3 justify-center whitespace-nowrap rounded-md text-sm dark:text-foreground font-medium transition-colors focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 text-primary-foreground shadow-sm dark:hover:from-secondary/80 hover:from-secondary/70 dark:hover:to-secondary/70 hover:to-secondary/90 bg-linear-to-b from-secondary/60 to-secondary dark:from-secondary dark:to-secondary/70 border-t-secondary h-9 px-4 py-2"
+                className="inline-flex items-center gap-3 justify-center whitespace-nowrap rounded-md text-sm dark:text-foreground font-medium transition-colors focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 text-primary-foreground shadow-sm dark:hover:from-secondary/80 hover:from-secondary/70 dark:hover:to-secondary/70 hover:to-secondary/90 bg-linear-to-b from-secondary/60 to-secondary dark:from-secondary dark:to-secondary/70 border-t-secondary h-9 px-4 py-2 relative"
               >
-                <span>{checked ? "Bidder" : "Dealer"}</span>
-                <Switch checked={checked} onCheckedChange={setChecked} />
+                {checked === null ? (
+                  <Skeleton className="h-5 w-20" />
+                ) : (
+                  <>
+                    <span>{checked ? "Dealer" : "Bidder"}</span>
+                    <Switch
+                      checked={checked}
+                      onCheckedChange={handleModeToggle}
+                      disabled={isCooldown}
+                    />
+                    {tooltip && (
+                      <span className="absolute top-full mt-1 text-xs text-red-500 bg-background border border-border rounded px-2 py-1 shadow-md">
+                        {tooltip}
+                      </span>
+                    )}
+                  </>
+                )}
               </div>
+
               <UserButton />
 
               <div className="lg:hidden">

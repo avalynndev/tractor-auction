@@ -15,10 +15,24 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { PersonIcon } from "@radix-ui/react-icons";
+import { getUserMode } from "@/actions/userMode";
+import { useEffect, useState } from "react";
 
 export function UserButton() {
   const { data: session, isPending } = useSession();
   const router = useRouter();
+  const [isDealer, setIsDealer] = useState(false);
+
+  useEffect(() => {
+    async function load() {
+      if (!session?.user?.id) return;
+
+      const mode = await getUserMode(session.user.id);
+      setIsDealer(mode);
+    }
+    load();
+  }, [session]);
+
 
   const handleSignOut = async () => {
     try {
@@ -109,6 +123,15 @@ export function UserButton() {
                 </div>
               </div>
             </div>
+            <DropdownMenuSeparator />
+
+            {isDealer && (
+              <Link href="/auction/new">
+                <DropdownMenuItem className="cursor-pointer">
+                  ➕ Add Auction
+                </DropdownMenuItem>
+              </Link>
+            )}
 
             <DropdownMenuSeparator />
 
@@ -135,7 +158,6 @@ export function UserButton() {
             </DropdownMenuItem>
           </>
         ) : (
-          // Unauthenticated user menu
           <>
             <Link href="/auth/sign-in">
               <DropdownMenuItem className="cursor-pointer">

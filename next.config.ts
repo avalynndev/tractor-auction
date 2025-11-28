@@ -5,14 +5,9 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "tractorauction.in",
+        hostname: "utfs.io",
       },
     ],
-  },
-  experimental: {
-    serverActions: {
-      bodySizeLimit: "4mb",
-    },
   },
 };
 

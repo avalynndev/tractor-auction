@@ -22,7 +22,6 @@ export default function HomePage() {
     <div className="min-h-screen px-4">
       <section className="container max-w-container relative md:pb-10 lg:pt-10 mx-auto rounded-3xl overflow-hidden">
         <div className="relative h-[80vh] min-h-[600px] w-full flex flex-col justify-between rounded-3xl">
-          {/* Background Image */}
           <div className="absolute inset-0 rounded-3xl overflow-hidden">
             <FadeImage
               src="/image_bg.png"

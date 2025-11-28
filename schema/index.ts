@@ -1,4 +1,4 @@
-import { pgTable, text, timestamp, boolean } from "drizzle-orm/pg-core";
+import { pgTable, text, integer, timestamp, boolean } from "drizzle-orm/pg-core";
 
 export const session = pgTable("session", {
   id: text("id").primaryKey(),
@@ -39,7 +39,6 @@ export const verification = pgTable("verification", {
   createdAt: timestamp("created_at"),
   updatedAt: timestamp("updated_at"),
 });
-
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -118,10 +117,11 @@ export const auction = pgTable("auction", {
   verified: boolean("verified"),
   expYear: text("exp_year"),
 
-  currentBid: text("current_bid"),
+  currentBid: integer("current_bid").default(0),
 
   createdAt: timestamp("created_at").notNull(),
   updatedAt: timestamp("updated_at").notNull(),
+  endingAt: timestamp("ending_at").notNull(),
 });
 
 export const schema = {
