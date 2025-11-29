@@ -47,7 +47,7 @@ export default async function AuctionsPage(props: {
   if (state) filters.push(eq(auction.state, state));
   if (condition) filters.push(eq(auction.condition, condition));
   if (clutch) filters.push(eq(auction.clutch, clutch));
-  if (gearbox) filters.push(eq(auction.gearBox, gearbox)); 
+  if (gearbox) filters.push(eq(auction.gearBox, gearbox));
   if (steering) filters.push(eq(auction.steering, steering));
   if (drive) filters.push(eq(auction.drive, drive));
   if (brand) filters.push(eq(auction.brand, brand));
