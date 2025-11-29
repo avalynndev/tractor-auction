@@ -21,8 +21,4 @@ export const NavigationLinks: NavigationLink[] = [
     href: "/contact",
     label: "Contact",
   },
-  {
-    href: "/policy",
-    label: "Policy",
-  },
 ];

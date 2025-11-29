@@ -126,14 +126,17 @@ export function UserButton() {
             <DropdownMenuSeparator />
 
             {isDealer && (
+              <>
+
               <Link href="/auction/new">
                 <DropdownMenuItem className="cursor-pointer">
                   ➕ Add Auction
                 </DropdownMenuItem>
               </Link>
+                          <DropdownMenuSeparator />
+</>
             )}
 
-            <DropdownMenuSeparator />
 
             <Link href="/auth/settings">
               <DropdownMenuItem className="cursor-pointer">

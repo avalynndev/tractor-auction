@@ -13,23 +13,28 @@ import { ThemeToggle } from "./theme-toggle";
 import { NavigationLinks } from "@/config/navigation";
 import { UserButton } from "@/components/user-button";
 
+import { DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "@/components/ui/dropdown-menu";
 import { getUserMode, updateUserMode } from "@/actions/userMode";
 import { Switch } from "./ui/switch";
-import { Skeleton } from "./ui/skeleton"; // shadcn skeleton
+import { Skeleton } from "./ui/skeleton";
 import { useSession } from "@/lib/auth-client";
+import { TriangleDownIcon } from "@radix-ui/react-icons";
 
 const Navbar = () => {
-  const [checked, setChecked] = useState<boolean | null>(null); // null = loading
+  const [checked, setChecked] = useState<boolean | null>(null);
   const [isCooldown, setIsCooldown] = useState(false);
   const [tooltip, setTooltip] = useState("");
   const [isScrolled, setIsScrolled] = useState(false);
 
   const { data: session } = useSession();
 
-  // Load mode and cooldown on mount
   useEffect(() => {
     async function loadMode() {
-      setChecked(null); // start loading
+      setChecked(null);
       const savedMode = localStorage.getItem("user-mode");
       if (savedMode !== null) setChecked(savedMode === "true");
 
@@ -39,7 +44,6 @@ const Navbar = () => {
         localStorage.setItem("user-mode", String(mode));
       }
 
-      // Check cooldown
       const lastToggle = localStorage.getItem("user-mode-last-toggle");
       if (lastToggle) {
         const lastTime = parseInt(lastToggle, 10);
@@ -69,7 +73,6 @@ const Navbar = () => {
       await updateUserMode(session.user.id, value);
     }
 
-    // Start cooldown and save timestamp
     const now = Date.now();
     localStorage.setItem("user-mode-last-toggle", String(now));
     setIsCooldown(true);
@@ -136,9 +139,10 @@ const Navbar = () => {
                   </>
                 )}
               </div>
-
               <UserButton />
-
+              <div className="lg:hidden">
+                <ThemeToggle />
+              </div>
               <div className="lg:hidden">
                 <Sheet>
                   <SheetTrigger asChild>
@@ -200,6 +204,39 @@ const Navbar = () => {
                             </Link>
                           </li>
                         ))}
+                        <li>
+                          <DropdownMenu>
+                            <DropdownMenuTrigger className="inline-flex h-9 items-center px-4 py-2 text-sm rounded-md hover:bg-accent hover:text-accent-foreground gap-1">
+                              Policy <TriangleDownIcon className="w-5 h-5" />
+                            </DropdownMenuTrigger>
+
+                            <DropdownMenuContent align="start" className="w-40">
+                              <DropdownMenuItem asChild>
+                                <Link href="/policy/cancellation-refund-policy">
+                                  Cancellation & Refund Policy
+                                </Link>
+                              </DropdownMenuItem>
+
+                              <DropdownMenuItem asChild>
+                                <Link href="/policy/terms-conditions">
+                                  Terms & Conditions
+                                </Link>
+                              </DropdownMenuItem>
+
+                              <DropdownMenuItem asChild>
+                                <Link href="/policy/shipping-policy">
+                                  Shipping Policy
+                                </Link>
+                              </DropdownMenuItem>
+
+                              <DropdownMenuItem asChild>
+                                <Link href="/policy/privacy-policy">
+                                  Privacy Policy
+                                </Link>
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </li>
                       </ul>
                     </nav>
                   </SheetContent>
@@ -240,6 +277,40 @@ const Navbar = () => {
                     </Link>
                   </li>
                 ))}
+                <li>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger className="inline-flex h-9 items-center px-4 py-2 text-sm rounded-md hover:bg-accent hover:text-accent-foreground gap-1">
+                      Policy <TriangleDownIcon className="w-5 h-5" />
+                    </DropdownMenuTrigger>
+
+                    <DropdownMenuContent align="start" className="w-40">
+                      <DropdownMenuItem asChild>
+                        <Link href="/policy/cancellation-refund-policy">
+                          Cancellation & Refund Policy
+                        </Link>
+                      </DropdownMenuItem>
+
+                      <DropdownMenuItem asChild>
+                        <Link href="/policy/terms-conditions">
+                          Terms & Conditions
+                        </Link>
+                      </DropdownMenuItem>
+
+                      <DropdownMenuItem asChild>
+                        <Link href="/policy/shipping-policy">
+                          Shipping Policy
+                        </Link>
+                      </DropdownMenuItem>
+
+                      <DropdownMenuItem asChild>
+                        <Link href="/policy/privacy-policy">
+                          Privacy Policy
+                        </Link>
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </li>
+
                 <li>
                   <ThemeToggle />
                 </li>
