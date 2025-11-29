@@ -25,7 +25,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Loader2, X } from "lucide-react";
+import { ChevronDownIcon, Loader2, X } from "lucide-react";
 import ImageUpload from "@/components/upload-thing";
 import {
   Popover,
@@ -94,6 +94,8 @@ type NullableString = string | null;
 export default function AddAuctionPage() {
   const { data: session } = useSession();
   const router = useRouter();
+  const [calendarOpen, setCalendarOpen] = useState(false);
+
   const [endingDate, setEndingDate] = useState<Date>();
   const [endingTime, setEndingTime] = useState<string>("");
 
@@ -116,13 +118,13 @@ export default function AddAuctionPage() {
 
   const [ipto, setIpto] = useState<string>("");
   const [clutch, setClutch] = useState<(typeof CLUTCH_OPTIONS)[number] | "">(
-    "",
+    ""
   );
   const [condition, setCondition] = useState<
     (typeof CONDITION_OPTIONS)[number] | ""
   >("");
   const [gearBox, setGearBox] = useState<(typeof GEARBOX_OPTIONS)[number] | "">(
-    "",
+    ""
   );
   const [steering, setSteering] = useState<
     (typeof STEERING_OPTIONS)[number] | ""
@@ -144,13 +146,6 @@ export default function AddAuctionPage() {
 
   const [additionalImages, setAdditionalImages] = useState<string[]>([]);
 
-  const [hours, minutes] = endingTime.split(":").map(Number);
-
-  const finalEndingDate = new Date(endingDate!);
-  finalEndingDate.setHours(hours);
-  finalEndingDate.setMinutes(minutes);
-  finalEndingDate.setSeconds(0);
-
   const validate = () => {
     if (!session?.user?.id) return "You must be logged in to create an auction";
     if (!title.trim()) return "Title is required";
@@ -163,11 +158,6 @@ export default function AddAuctionPage() {
     if (!horsepower.trim()) return "Horsepower is required";
     if (!hoursRun.trim()) return "Hours run is required";
     if (!registrationNumber.trim()) return "Registration number is required";
-    if (!endingDate || !endingTime) {
-      toast.error("Please select both date and time");
-      return;
-    }
-
     if ((category === "preapproved" || category === "scrap") && !price.trim())
       return "Price is required for preapproved/scrap";
     return null;
@@ -180,17 +170,46 @@ export default function AddAuctionPage() {
       return;
     }
 
+    if (!endingDate || !endingTime) {
+      toast.error("Please select both date and time");
+      return;
+    }
+
     setSubmitting(true);
 
     try {
+      const finalEndingDate = new Date(endingDate!);
+
+      const timeParts = endingTime.split(":").map(Number);
+      const hours = timeParts[0];
+      const minutes = timeParts[1];
+
+      if (isNaN(hours) || isNaN(minutes)) {
+        toast.error("Invalid time format");
+        setSubmitting(false);
+        return;
+      }
+
+      finalEndingDate.setHours(hours, minutes, 0, 0);
+
+      if (isNaN(finalEndingDate.getTime())) {
+        toast.error("Invalid date/time combination");
+        setSubmitting(false);
+        return;
+      }
+
+      console.log("Final ending date:", finalEndingDate);
+      console.log("ISO string:", finalEndingDate.toISOString());
+
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      toast.success("Auction submitted successfully! 🚀");
       await createAuction({
         id: crypto.randomUUID(),
         userId: session!.user!.id,
-
         title: title.trim(),
         category,
         brand: brand.trim() || null,
-
         coverImage: coverImage!,
         image1: additionalImages[0] ?? null,
         image2: additionalImages[1] ?? null,
@@ -198,7 +217,6 @@ export default function AddAuctionPage() {
         image4: additionalImages[3] ?? null,
         image5: additionalImages[4] ?? null,
         image6: additionalImages[5] ?? null,
-
         battery,
         bumper,
         drawBar,
@@ -207,7 +225,6 @@ export default function AddAuctionPage() {
         nocPapers,
         readyForToken,
         top,
-
         ipto: ipto || null,
         clutch,
         condition,
@@ -224,14 +241,14 @@ export default function AddAuctionPage() {
         state: state || null,
         verified,
         expYear: expYear || null,
-        endingAt: finalEndingDate.toISOString(),
+        endingAt: finalEndingDate,
       });
 
       setTitle("");
       setDescription("");
       setBrand("");
       setCoverImage(null);
-      setAdditionalImages([""]);
+      setAdditionalImages([]);
       setBattery(false);
       setBumper(false);
       setDrawBar(false);
@@ -334,22 +351,30 @@ export default function AddAuctionPage() {
             <div className="flex flex-col gap-2">
               <label className="font-medium">Ending Date</label>
 
-              <Popover>
+              <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
                 <PopoverTrigger asChild>
                   <Button
                     variant="outline"
-                    className="w-full justify-start text-left font-normal"
+                    id="date-picker"
+                    className="justify-between font-normal"
                   >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {endingDate ? format(endingDate, "PPP") : "Pick a date"}
+                    {endingDate
+                      ? endingDate.toLocaleDateString()
+                      : "Select date"}
+                    <ChevronDownIcon className="h-4 w-4" />
                   </Button>
                 </PopoverTrigger>
-
-                <PopoverContent className="w-auto p-0">
+                <PopoverContent
+                  className="w-auto overflow-hidden p-0"
+                  align="start"
+                >
                   <Calendar
                     mode="single"
                     selected={endingDate}
-                    onSelect={setEndingDate}
+                    onSelect={(date) => {
+                      setEndingDate(date);
+                      setCalendarOpen(false);
+                    }}
                     disabled={(date) => date < new Date()}
                     initialFocus
                   />
@@ -363,10 +388,10 @@ export default function AddAuctionPage() {
               <div className="relative">
                 <Input
                   type="time"
+                  id="time-picker"
                   value={endingTime}
-                  required
-                  className=""
                   onChange={(e) => setEndingTime(e.target.value)}
+                  className="bg-background appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
                 />
               </div>
             </div>
@@ -433,7 +458,7 @@ export default function AddAuctionPage() {
                         variant="destructive"
                         onClick={() => {
                           setAdditionalImages(
-                            additionalImages.filter((_, i) => i !== index),
+                            additionalImages.filter((_, i) => i !== index)
                           );
                         }}
                       >
