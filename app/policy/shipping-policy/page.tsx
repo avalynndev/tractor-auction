@@ -1,6 +1,5 @@
 "use client";
 
-
 export default function ShippingPolicyPage() {
   return (
     <div className="max-w-4xl mx-auto py-16 px-6 md:px-14 lg:px-20">

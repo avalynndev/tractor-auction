@@ -99,14 +99,14 @@ export function AuctionFilterSheet() {
   const [brand, setBrand] = useState(params.get("brand") || "");
   const [tyres, setTyres] = useState(params.get("tyres") || "");
   const [tyrePercent, setTyrePercent] = useState(
-    params.get("tyre_percent") || ""
+    params.get("tyre_percent") || "",
   );
   const [horsepower, setHorsepower] = useState(params.get("horsepower") || "");
   const [mfgYear, setMfgYear] = useState(params.get("mfg_year") || "");
   const [price, setPrice] = useState(params.get("price") || "");
   const [hoursRun, setHoursRun] = useState(params.get("hours_run") || "");
   const [registrationNumber, setRegistrationNumber] = useState(
-    params.get("registration_number") || ""
+    params.get("registration_number") || "",
   );
   const [ipto, setIpto] = useState(params.get("ipto") || "");
   const [expYear, setExpYear] = useState(params.get("exp_year") || "");
@@ -115,14 +115,14 @@ export function AuctionFilterSheet() {
   const [bumper, setBumper] = useState(params.get("bumper") === "true");
   const [drawBar, setDrawBar] = useState(params.get("draw_bar") === "true");
   const [insurance, setInsurance] = useState(
-    params.get("insurance") === "true"
+    params.get("insurance") === "true",
   );
   const [itch, setItch] = useState(params.get("itch") === "true");
   const [nocPapers, setNocPapers] = useState(
-    params.get("noc_papers") === "true"
+    params.get("noc_papers") === "true",
   );
   const [readyForToken, setReadyForToken] = useState(
-    params.get("ready_for_token") === "true"
+    params.get("ready_for_token") === "true",
   );
   const [top, setTop] = useState(params.get("top") === "true");
 

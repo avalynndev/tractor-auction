@@ -71,8 +71,6 @@
   --animate-appear: appear 0.6s forwards ease-out;
   --animate-appear-zoom: appear-zoom 0.6s forwards ease-out;
 
-
-
   @keyframes fadeIn {
     to {
       opacity: 1;
@@ -291,9 +289,9 @@
   --input: oklch(0.3416 0.0444 308.8496);
   --ring: oklch(0.7874 0.1179 295.7538);
   --chart-1: oklch(0.7874 0.1179 295.7538);
-  --chart-2: oklch(0.7090 0.1592 293.5412);
+  --chart-2: oklch(0.709 0.1592 293.5412);
   --chart-3: oklch(0.6056 0.2189 292.7172);
-  --chart-4: oklch(0.5413 0.2466 293.0090);
+  --chart-4: oklch(0.5413 0.2466 293.009);
   --chart-5: oklch(0.4907 0.2412 292.5809);
   --sidebar: oklch(0.3416 0.0444 308.8496);
   --sidebar-foreground: oklch(0.9299 0.0334 272.7879);
@@ -315,12 +313,17 @@
   --shadow-color: hsl(0 0% 0%);
   --shadow-2xs: 0px 8px 16px -4px hsl(0 0% 0% / 0.04);
   --shadow-xs: 0px 8px 16px -4px hsl(0 0% 0% / 0.04);
-  --shadow-sm: 0px 8px 16px -4px hsl(0 0% 0% / 0.08), 0px 1px 2px -5px hsl(0 0% 0% / 0.08);
-  --shadow: 0px 8px 16px -4px hsl(0 0% 0% / 0.08), 0px 1px 2px -5px hsl(0 0% 0% / 0.08);
-  --shadow-md: 0px 8px 16px -4px hsl(0 0% 0% / 0.08), 0px 2px 4px -5px hsl(0 0% 0% / 0.08);
-  --shadow-lg: 0px 8px 16px -4px hsl(0 0% 0% / 0.08), 0px 4px 6px -5px hsl(0 0% 0% / 0.08);
-  --shadow-xl: 0px 8px 16px -4px hsl(0 0% 0% / 0.08), 0px 8px 10px -5px hsl(0 0% 0% / 0.08);
-  --shadow-2xl: 0px 8px 16px -4px hsl(0 0% 0% / 0.20);
+  --shadow-sm:
+    0px 8px 16px -4px hsl(0 0% 0% / 0.08), 0px 1px 2px -5px hsl(0 0% 0% / 0.08);
+  --shadow:
+    0px 8px 16px -4px hsl(0 0% 0% / 0.08), 0px 1px 2px -5px hsl(0 0% 0% / 0.08);
+  --shadow-md:
+    0px 8px 16px -4px hsl(0 0% 0% / 0.08), 0px 2px 4px -5px hsl(0 0% 0% / 0.08);
+  --shadow-lg:
+    0px 8px 16px -4px hsl(0 0% 0% / 0.08), 0px 4px 6px -5px hsl(0 0% 0% / 0.08);
+  --shadow-xl:
+    0px 8px 16px -4px hsl(0 0% 0% / 0.08), 0px 8px 10px -5px hsl(0 0% 0% / 0.08);
+  --shadow-2xl: 0px 8px 16px -4px hsl(0 0% 0% / 0.2);
   --color-1: 0 100% 63%;
   --color-2: 270 100% 63%;
   --color-3: 210 100% 63%;

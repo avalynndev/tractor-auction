@@ -13,7 +13,8 @@ import { ThemeToggle } from "./theme-toggle";
 import { NavigationLinks } from "@/config/navigation";
 import { UserButton } from "@/components/user-button";
 
-import { DropdownMenu,
+import {
+  DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,

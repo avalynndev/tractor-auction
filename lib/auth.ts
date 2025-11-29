@@ -8,10 +8,10 @@ import { Resend } from "resend";
 import { EmailTemplate } from "@daveyplate/better-auth-ui/server";
 
 const resend = new Resend(process.env.RESEND_API_KEY || "");
-const fromEmail = "ENJOYTOWN <noreply@auth.newtech.dev>";
+const fromEmail = "TRACTORAUCTION <noreply@auth.newtech.dev>";
 
 export const auth = betterAuth({
-  appName: "Enjoytown",
+  appName: "TractorAuction",
   baseURL: process.env.BETTER_AUTH_URL || "http://localhost:3000",
   emailAndPassword: {
     enabled: true,

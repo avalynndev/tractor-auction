@@ -1,5 +1,45 @@
+"use client";
+
+import {
+  UserPlus,
+  Search,
+  Gavel,
+  Trophy,
+  ShieldCheck,
+  Activity,
+  BarChart,
+  CheckCircle2,
+  FileText,
+  Headphones,
+} from "lucide-react";
+
+interface Step {
+  title: string;
+  desc: string;
+  icon: keyof typeof IconMap;
+}
+
+interface Benefit {
+  title: string;
+  desc: string;
+  icon: keyof typeof IconMap;
+}
+
+const IconMap = {
+  UserPlus,
+  Search,
+  Gavel,
+  Trophy,
+  ShieldCheck,
+  Activity,
+  BarChart,
+  CheckCircle2,
+  FileText,
+  Headphones,
+};
+
 export default function HowItWorksPage() {
-  const steps = [
+  const steps: Step[] = [
     {
       title: "Register as Dealer",
       desc: "Create your dealer account with quick verification process",
@@ -22,7 +62,7 @@ export default function HowItWorksPage() {
     },
   ];
 
-  const benefits = [
+  const benefits: Benefit[] = [
     {
       title: "Secure Transactions",
       desc: "Bank-grade security for all your bidding and payment transactions",
@@ -64,9 +104,9 @@ export default function HowItWorksPage() {
         </p>
       </section>
 
-      <section className="grid grid-cols-1 md:grid-cols-2  gap-8 mb-24">
+      <section className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-24">
         {steps.map((s, i) => {
-          const Icon = require("lucide-react")[s.icon];
+          const Icon = IconMap[s.icon];
           return (
             <div
               key={i}
@@ -89,7 +129,7 @@ export default function HowItWorksPage() {
 
       <section className="grid grid-cols-1 md:grid-cols-2 gap-10">
         {benefits.map((b, i) => {
-          const Icon = require("lucide-react")[b.icon];
+          const Icon = IconMap[b.icon];
           return (
             <div
               key={i}

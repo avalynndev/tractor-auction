@@ -131,17 +131,11 @@ export default function AuctionDetails({
           <Button variant="outline" className="w-full py-6 text-lg">
             Buy Now
           </Button>
-
-          <div className="pt-4 text-xs text-muted-foreground">
-            Buyer's Premium: ₹500
-          </div>
         </CardContent>
       </Card>
     </div>
   );
 }
-
-/* ---- COMPONENTS ---- */
 
 function Spec({ label, value }: { label: string; value?: string | null }) {
   return (

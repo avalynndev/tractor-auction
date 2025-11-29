@@ -29,7 +29,6 @@ export default async function AuctionsPage(props: {
     registration_number,
     ipto,
     exp_year,
-    // Boolean fields
     battery,
     bumper,
     draw_bar,
@@ -44,12 +43,11 @@ export default async function AuctionsPage(props: {
 
   const filters = [];
 
-  // String-based filters
   if (category) filters.push(eq(auction.category, category));
   if (state) filters.push(eq(auction.state, state));
   if (condition) filters.push(eq(auction.condition, condition));
   if (clutch) filters.push(eq(auction.clutch, clutch));
-  if (gearbox) filters.push(eq(auction.gearBox, gearbox)); // Note: schema uses gearBox
+  if (gearbox) filters.push(eq(auction.gearBox, gearbox)); 
   if (steering) filters.push(eq(auction.steering, steering));
   if (drive) filters.push(eq(auction.drive, drive));
   if (brand) filters.push(eq(auction.brand, brand));
@@ -64,7 +62,6 @@ export default async function AuctionsPage(props: {
   if (ipto) filters.push(eq(auction.ipto, ipto));
   if (exp_year) filters.push(eq(auction.expYear, exp_year));
 
-  // Boolean filters
   if (battery === "true") filters.push(eq(auction.battery, true));
   if (bumper === "true") filters.push(eq(auction.bumper, true));
   if (draw_bar === "true") filters.push(eq(auction.drawBar, true));
@@ -74,7 +71,6 @@ export default async function AuctionsPage(props: {
   if (ready_for_token === "true") filters.push(eq(auction.readyForToken, true));
   if (top === "true") filters.push(eq(auction.top, true));
 
-  // Fetch filtered auctions
   const auctions = await db
     .select()
     .from(auction)
@@ -114,8 +110,7 @@ export default async function AuctionsPage(props: {
                     <span className="font-medium">{item.category}</span>
                   </p>
                   <p className="text-sm text-muted-foreground">
-                    Clutch:{" "}
-                    <span className="font-medium">₹{item.clutch}</span>
+                    Clutch: <span className="font-medium">₹{item.clutch}</span>
                   </p>
                   <p className="text-sm text-muted-foreground">
                     Current Bid:{" "}

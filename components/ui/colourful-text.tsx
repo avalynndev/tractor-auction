@@ -27,6 +27,7 @@ export default function ColourfulText({ text }: { text: string }) {
     }, 5000);
 
     return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return text.split("").map((char, index) => (

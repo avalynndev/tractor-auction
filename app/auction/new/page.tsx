@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { useSession } from "@/lib/auth-client";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -25,7 +25,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Clock, Loader2, X } from "lucide-react";
+import { Loader2, X } from "lucide-react";
 import ImageUpload from "@/components/upload-thing";
 import {
   Popover,
@@ -35,6 +35,7 @@ import {
 import { Calendar } from "@/components/ui/calendar";
 import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
+import Image from "next/image";
 
 const CLUTCH_OPTIONS = ["dual", "single"] as const;
 const CONDITION_OPTIONS = ["push_start", "self_start", "towing"] as const;
@@ -115,13 +116,13 @@ export default function AddAuctionPage() {
 
   const [ipto, setIpto] = useState<string>("");
   const [clutch, setClutch] = useState<(typeof CLUTCH_OPTIONS)[number] | "">(
-    ""
+    "",
   );
   const [condition, setCondition] = useState<
     (typeof CONDITION_OPTIONS)[number] | ""
   >("");
   const [gearBox, setGearBox] = useState<(typeof GEARBOX_OPTIONS)[number] | "">(
-    ""
+    "",
   );
   const [steering, setSteering] = useState<
     (typeof STEERING_OPTIONS)[number] | ""
@@ -140,18 +141,6 @@ export default function AddAuctionPage() {
   const [expYear, setExpYear] = useState("");
 
   const [submitting, setSubmitting] = useState(false);
-
-  const convertFileToBase64 = (file: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        if (typeof reader.result === "string") resolve(reader.result);
-        else reject(new Error("Failed to convert file to base64"));
-      };
-      reader.onerror = reject;
-    });
-  };
 
   const [additionalImages, setAdditionalImages] = useState<string[]>([]);
 
@@ -192,15 +181,6 @@ export default function AddAuctionPage() {
     }
 
     setSubmitting(true);
-
-    const allImages = [...additionalImages];
-
-    const img1 = allImages[0] ?? null;
-    const img2 = allImages[1] ?? null;
-    const img3 = allImages[2] ?? null;
-    const img4 = allImages[3] ?? null;
-    const img5 = allImages[4] ?? null;
-    const img6 = allImages[5] ?? null;
 
     try {
       await createAuction({
@@ -276,8 +256,8 @@ export default function AddAuctionPage() {
       setState("");
       setVerified(false);
       setExpYear("");
-      setEndingTime("")
-      setEndingDate(undefined)
+      setEndingTime("");
+      setEndingDate(undefined);
 
       router.refresh();
       toast.success("Auction submitted successfully! 🚀");
@@ -405,10 +385,11 @@ export default function AddAuctionPage() {
 
               {coverImage ? (
                 <div className="relative border-2 border-muted-foreground rounded-lg overflow-hidden aspect-video">
-                  <img
+                  <Image
                     src={coverImage}
                     alt="Cover"
-                    className="w-full h-full object-cover"
+                    fill
+                    className="object-cover"
                   />
                   <div className="absolute inset-0 bg-black/0 hover:bg-black/40 transition-all flex items-center justify-center gap-2 opacity-0 hover:opacity-100">
                     <Button
@@ -439,10 +420,11 @@ export default function AddAuctionPage() {
                     key={index}
                     className="relative border-2 border-muted-foreground rounded-lg overflow-hidden aspect-video"
                   >
-                    <img
+                    <Image
                       src={image}
                       alt={`Additional ${index + 1}`}
-                      className="w-full h-full object-cover"
+                      fill
+                      className="object-cover"
                     />
                     <div className="absolute inset-0 bg-black/0 hover:bg-black/40 transition-all flex items-center justify-center opacity-0 hover:opacity-100">
                       <Button
@@ -451,7 +433,7 @@ export default function AddAuctionPage() {
                         variant="destructive"
                         onClick={() => {
                           setAdditionalImages(
-                            additionalImages.filter((_, i) => i !== index)
+                            additionalImages.filter((_, i) => i !== index),
                           );
                         }}
                       >

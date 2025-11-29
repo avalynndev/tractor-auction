@@ -1,5 +1,5 @@
 "use client";
-import { ThemeProvider as NextThemesProvider, useTheme } from "next-themes";
+import { useTheme } from "next-themes";
 import { Toaster } from "sonner";
 import { AuthUIProvider } from "@daveyplate/better-auth-ui";
 import { useRouter } from "next/navigation";

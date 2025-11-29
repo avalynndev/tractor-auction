@@ -16,7 +16,7 @@ export default function ImageUpload({
       endpoint="auctionImages"
       config={{ mode: "auto" }}
       appearance={{
-        container: `${cover && "py-24" } py-4 border-2 border-dashed border-muted-foreground rounded-lg`,
+        container: `${cover && "py-24"} py-4 border-2 border-dashed border-muted-foreground rounded-lg`,
         uploadIcon: "text-muted-foreground",
         label: "text-foreground hover:text-primary",
         allowedContent: "text-muted-foreground",

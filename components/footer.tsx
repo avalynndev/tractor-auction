@@ -28,14 +28,7 @@ interface FooterProps {
 }
 
 export default function FooterSection({
-  logo = (
-    <FadeImage
-      src="/logo.svg"
-      alt="Logo"
-      width={36}
-      height={36}
-    />
-  ),
+  logo = <FadeImage src="/logo.svg" alt="Logo" width={36} height={36} />,
   name = "Tractor Auction",
   columns = [
     {

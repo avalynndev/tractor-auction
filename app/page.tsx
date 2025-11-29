@@ -1,21 +1,11 @@
 "use client";
 
-import * as React from "react";
-import {
-  ArrowRight,
-  Star,
-  Users,
-  Globe,
-  Gavel,
-  UserPlus,
-  Info,
-} from "lucide-react";
+import { ArrowRight, Gavel, UserPlus, Info } from "lucide-react";
 import FadeImage from "@/components/ui/fade-image";
 import { Link } from "next-view-transitions";
 import { Button } from "@/components/ui/button";
 import { MorphingText } from "@/components/ui/morphing-text";
 import { MorphingTextWithSkeleton } from "@/components/skleton-morphing";
-import { TextAnimate } from "@/components/ui/text-animate";
 
 export default function HomePage() {
   return (

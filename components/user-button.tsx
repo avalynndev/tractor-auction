@@ -33,7 +33,6 @@ export function UserButton() {
     load();
   }, [session]);
 
-
   const handleSignOut = async () => {
     try {
       await signOut();
@@ -127,16 +126,14 @@ export function UserButton() {
 
             {isDealer && (
               <>
-
-              <Link href="/auction/new">
-                <DropdownMenuItem className="cursor-pointer">
-                  ➕ Add Auction
-                </DropdownMenuItem>
-              </Link>
-                          <DropdownMenuSeparator />
-</>
+                <Link href="/auction/new">
+                  <DropdownMenuItem className="cursor-pointer">
+                    ➕ Add Auction
+                  </DropdownMenuItem>
+                </Link>
+                <DropdownMenuSeparator />
+              </>
             )}
-
 
             <Link href="/auth/settings">
               <DropdownMenuItem className="cursor-pointer">
