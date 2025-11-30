@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Settings, LogOut, User, LogIn, UserPlus } from "lucide-react";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { PersonIcon } from "@radix-ui/react-icons";

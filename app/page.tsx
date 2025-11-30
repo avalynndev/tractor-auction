@@ -41,29 +41,33 @@ export default function HomePage() {
 
           <div className="relative z-10 w-full px-4 pb-8 md:pb-12 lg:pb-16 flex justify-center bg-black/30 backdrop-blur-xl pt-10 rounded-b-3xl">
             <div className="flex flex-col md:flex-row gap-4">
-              <Button
-                variant="outline"
-                className="rounded-full px-8 py-6 text-base flex items-center gap-2"
-              >
-                <Info className="w-5 h-5" />
-                How It Works
-              </Button>
-
-              <Button
-                variant="default"
-                className="rounded-full px-8 py-6 text-base flex items-center gap-2"
-              >
-                <Gavel className="w-5 h-5" />
-                Auction
-              </Button>
-
-              <Button
-                variant="outline"
-                className="rounded-full px-8 py-6 text-base flex items-center gap-2"
-              >
-                <UserPlus className="w-5 h-5" />
-                Register
-              </Button>
+              <Link href="/how-it-works">
+                <Button
+                  variant="outline"
+                  className="rounded-full px-8 py-6 text-base flex items-center gap-2"
+                >
+                  <Info className="w-5 h-5" />
+                  How It Works
+                </Button>
+              </Link>
+              <Link href="/auctions">
+                <Button
+                  variant="default"
+                  className="rounded-full px-8 py-6 text-base flex items-center gap-2"
+                >
+                  <Gavel className="w-5 h-5" />
+                  Auctions
+                </Button>
+              </Link>
+              <Link href="/auth/sign-up">
+                <Button
+                  variant="outline"
+                  className="rounded-full px-8 py-6 text-base flex items-center gap-2"
+                >
+                  <UserPlus className="w-5 h-5" />
+                  Register
+                </Button>
+              </Link>
             </div>
           </div>
         </div>

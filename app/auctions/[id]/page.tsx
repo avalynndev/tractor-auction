@@ -3,11 +3,12 @@
 import Image from "next/image";
 import { getAuction } from "@/actions/getAuction";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import React, { useEffect, useState } from "react";
 import { useSession } from "@/lib/auth-client";
-import { Skeleton } from "@/components/ui/skeleton";
-import { ReloadIcon } from "@radix-ui/react-icons";
+import { GearIcon, ReloadIcon } from "@radix-ui/react-icons";
+import PlaceBidDialog from "@/components/place-bid";
+import { Button } from "@/components/ui/button";
+import { Link } from "next-view-transitions";
 
 export default function AuctionDetails({
   params,
@@ -28,7 +29,7 @@ export default function AuctionDetails({
 
   if (!item)
     return (
-      <div className="relative flex h-[60vh] items-center justify-center">
+      <div className="relative flex min-h-screen items-center justify-center">
         <ReloadIcon className="h-8 w-8 animate-spin" />
       </div>
     );
@@ -127,21 +128,18 @@ export default function AuctionDetails({
         <ImageGroup images={images} />
       </div>
 
-      <Card className="h-fit sticky top-4">
-        <CardHeader>
-          <CardTitle className="text-lg">Current Bid</CardTitle>
-        </CardHeader>
+      <div className="space-y-4 sticky h-fit top-4">
+        <PlaceBidDialog item={item} session={session} />
 
-        <CardContent className="space-y-4">
-          <div className="text-3xl font-bold">₹{item.currentBid || 0}</div>
-
-          {session?.user?.id ? (
-            <Button className="w-full py-6 text-lg">Place Bid</Button>
-          ) : (
-            <Skeleton className="w-full h-14 rounded-md" />
-          )}
-        </CardContent>
-      </Card>
+        {session?.user?.id === item.userId && (
+          <Link href={`/auction/${item.id}/settings`}>
+            <Button variant="secondary" className="w-full py-6 text-lg">
+              <GearIcon />
+              Settings
+            </Button>
+          </Link>
+        )}
+      </div>
     </div>
   );
 }

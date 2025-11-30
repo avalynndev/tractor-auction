@@ -39,8 +39,6 @@ export default async function AuctionsPage(props: {
     top,
   } = searchParams;
 
-  console.log(searchParams);
-
   const filters = [];
 
   if (category) filters.push(eq(auction.category, category));

@@ -82,7 +82,7 @@ export default function RootLayout({
                     <div
                       className="fixed inset-0 z-[-1] bg-cover bg-center bg-no-repeat opacity-[0.10]"
                       style={{
-                        backgroundImage: "url('/bg-opaque.jpg')",
+                        backgroundImage: "url('/bg-opaque.png')",
                         backgroundAttachment: "fixed",
                       }}
                     />

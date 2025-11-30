@@ -18,7 +18,7 @@ export default function FallingLeaves() {
 
     for (let i = 0; i < total; i++) {
       const div = document.createElement("div");
-      div.className = "leaf-dot absolute w-[20px] h-[20px] pointer-events-none";
+      div.className = "leaf-dot absolute w-[25px] h-[24px] pointer-events-none";
       div.setAttribute(
         "style",
         "background-image:url('https://www.freeiconspng.com/uploads/snowflake-png-5.png'); background-size: 100% 100%;"
