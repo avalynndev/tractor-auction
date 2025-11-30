@@ -249,15 +249,14 @@ function Testimonials() {
             key={i}
             className="p-6 border rounded-2xl shadow-sm bg-card/40 hover:shadow-md transition-all"
           >
-              <div className="relative w-16 h-16 rounded-full bg-muted flex items-center justify-center mx-auto mb-4">
-                <Image
-                  src={t.avatar}
-                  alt={t.name}
-                  fill
-                  className="object-cover rounded-full"
-                />
-              </div>
-       
+            <div className="relative w-16 h-16 rounded-full bg-muted flex items-center justify-center mx-auto mb-4">
+              <Image
+                src={t.avatar}
+                alt={t.name}
+                fill
+                className="object-cover rounded-full"
+              />
+            </div>
 
             <p className="text-center text-sm text-muted-foreground">
               {t.text}
