@@ -74,15 +74,15 @@ export default function RootLayout({
               disableTransitionOnChange
             >
               <NextTopLoader color="#ccc" showSpinner={false} />
-              <FallingLeaves/>
+              <FallingLeaves />
               <SonnerProvider>
                 <Navbar />
                 <main className="overflow-x-hidden md:overflow-visible">
                   <div className="relative overflow-hidden">
                     <div
-                      className="fixed inset-0 z-[-1] bg-cover bg-center bg-no-repeat opacity-[0.20]"
+                      className="fixed inset-0 z-[-1] bg-cover bg-center bg-no-repeat opacity-[0.10]"
                       style={{
-                        backgroundImage: "url('/bg-opaque.png')",
+                        backgroundImage: "url('/bg-opaque.jpg')",
                         backgroundAttachment: "fixed",
                       }}
                     />
