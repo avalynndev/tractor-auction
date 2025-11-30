@@ -8,6 +8,7 @@ import { ViewTransitions } from "next-view-transitions";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import NextTopLoader from "nextjs-toploader";
+import FallingLeaves from "@/components/fall";
 
 const breakfastNoodles = localFont({
   src: "/bn.woff2",
@@ -73,7 +74,7 @@ export default function RootLayout({
               disableTransitionOnChange
             >
               <NextTopLoader color="#ccc" showSpinner={false} />
-
+              <FallingLeaves/>
               <SonnerProvider>
                 <Navbar />
                 <main className="overflow-x-hidden md:overflow-visible">
