@@ -118,28 +118,31 @@ const Navbar = () => {
               data-slot="navbar-right"
               className="lg:pt-5 flex items-center justify-end gap-4 relative"
             >
-              <div
-                data-slot="button"
-                className="inline-flex items-center gap-3 justify-center whitespace-nowrap rounded-md text-sm dark:text-foreground font-medium transition-colors focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 text-primary-foreground shadow-sm dark:hover:from-secondary/80 hover:from-secondary/70 dark:hover:to-secondary/70 hover:to-secondary/90 bg-linear-to-b from-secondary/60 to-secondary dark:from-secondary dark:to-secondary/70 border-t-secondary h-9 px-4 py-2 relative"
-              >
-                {checked === null ? (
-                  <Skeleton className="h-5 w-20" />
-                ) : (
-                  <>
-                    <span>{checked ? "Dealer" : "Bidder"}</span>
-                    <Switch
-                      checked={checked}
-                      onCheckedChange={handleModeToggle}
-                      disabled={isCooldown}
-                    />
-                    {tooltip && (
-                      <span className="absolute top-full mt-1 text-xs text-red-500 bg-background border border-border rounded px-2 py-1 shadow-md">
-                        {tooltip}
-                      </span>
-                    )}
-                  </>
-                )}
-              </div>
+              {session?.user?.id && (
+                <div
+                  data-slot="button"
+                  className="inline-flex items-center gap-3 justify-center whitespace-nowrap rounded-md text-sm dark:text-foreground font-medium transition-colors text-primary-foreground shadow-sm bg-linear-to-b from-secondary/60 to-secondary h-9 px-4 py-2 relative"
+                >
+                  {checked === null ? (
+                    <Skeleton className="h-5 w-20" />
+                  ) : (
+                    <>
+                      <span>{checked ? "Dealer" : "Bidder"}</span>
+                      <Switch
+                        checked={checked}
+                        onCheckedChange={handleModeToggle}
+                        disabled={isCooldown}
+                      />
+                      {tooltip && (
+                        <span className="absolute top-full mt-1 text-xs text-red-500 bg-background border border-border rounded px-2 py-1 shadow-md">
+                          {tooltip}
+                        </span>
+                      )}
+                    </>
+                  )}
+                </div>
+              )}
+
               <UserButton />
               <div className="lg:hidden">
                 <ThemeToggle />

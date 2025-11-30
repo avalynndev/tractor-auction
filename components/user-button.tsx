@@ -87,7 +87,7 @@ export function UserButton() {
                 alt={session?.user?.name || session?.user?.username || "User"}
               />
             ) : null}
-            <AvatarFallback>
+            <AvatarFallback className="bg-muted border-muted-foreground border-2">
               <User className="h-4 w-4" />
             </AvatarFallback>
           </Avatar>

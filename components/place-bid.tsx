@@ -125,7 +125,10 @@ export default function PlaceBidDialog({
             </CredenzaContent>
           </Credenza>
         ) : (
-          <Skeleton className="w-full h-14 rounded-md" />
+          <>
+            <Skeleton className="w-full h-14 rounded-md" />
+            <div className="text-sm font-bold text-destructive">Please signup to place a bid</div>
+          </>
         )}
       </CardContent>
     </Card>

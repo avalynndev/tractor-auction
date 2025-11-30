@@ -74,6 +74,7 @@ export default function RootLayout({
               disableTransitionOnChange
             >
               <NextTopLoader color="#ccc" showSpinner={false} />
+              <FallingLeaves />
               <SonnerProvider>
                 <Navbar />
                 <main className="overflow-x-hidden md:overflow-visible">
