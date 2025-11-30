@@ -3,7 +3,6 @@
 import { useEffect } from "react";
 import { gsap } from "gsap";
 
-
 export default function FallingLeaves() {
   useEffect(() => {
     const total = 30;
@@ -21,7 +20,7 @@ export default function FallingLeaves() {
       div.className = "leaf-dot absolute w-[25px] h-[24px] pointer-events-none";
       div.setAttribute(
         "style",
-        "background-image:url('https://www.freeiconspng.com/uploads/snowflake-png-5.png'); background-size: 100% 100%;"
+        "background-image:url('https://www.freeiconspng.com/uploads/snowflake-png-5.png'); background-size: 100% 100%;",
       );
       gsap.set(div, { x: R(0, w), y: R(-200, -150), z: R(-200, 200) });
       container.appendChild(div);
@@ -31,7 +30,7 @@ export default function FallingLeaves() {
     function animateLeaf(
       elm: HTMLElement,
       h: number,
-      R: (min: number, max: number) => number
+      R: (min: number, max: number) => number,
     ) {
       gsap.to(elm, {
         y: h + 100,

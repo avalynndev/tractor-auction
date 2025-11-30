@@ -88,7 +88,11 @@ const STATE_OPTIONS = [
   "Ladakh",
 ] as const;
 
-export default function AuctionSettingsPage({ params }: { params: Promise<{ id: string }> }) {
+export default function AuctionSettingsPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
@@ -115,7 +119,7 @@ export default function AuctionSettingsPage({ params }: { params: Promise<{ id: 
 
   // Tractor Specs
   const [clutch, setClutch] = useState<(typeof CLUTCH_OPTIONS)[number] | "">(
-    ""
+    "",
   );
   const [condition, setCondition] = useState<
     (typeof CONDITION_OPTIONS)[number] | ""
@@ -155,7 +159,7 @@ export default function AuctionSettingsPage({ params }: { params: Promise<{ id: 
           setTitle(data.title || "");
           setDescription(data.description || "");
           setCategory(
-            (data.category as (typeof CATEGORY_OPTIONS)[number]) || "regular"
+            (data.category as (typeof CATEGORY_OPTIONS)[number]) || "regular",
           );
           setBrand(data.brand || "");
 
@@ -182,7 +186,7 @@ export default function AuctionSettingsPage({ params }: { params: Promise<{ id: 
 
           setClutch((data.clutch as (typeof CLUTCH_OPTIONS)[number]) || "");
           setCondition(
-            (data.condition as (typeof CONDITION_OPTIONS)[number]) || ""
+            (data.condition as (typeof CONDITION_OPTIONS)[number]) || "",
           );
           setGearBox(data.gearBox || "");
           setSteering(data.steering || "");
@@ -209,7 +213,7 @@ export default function AuctionSettingsPage({ params }: { params: Promise<{ id: 
           setReadyForToken(data.readyForToken || false);
           setTop(data.top || false);
         }
-      } catch (err) {
+      } catch {
         toast.error("Failed to load auction");
       } finally {
         setLoading(false);
@@ -285,7 +289,7 @@ export default function AuctionSettingsPage({ params }: { params: Promise<{ id: 
         top,
       });
       toast.success("Auction updated successfully!");
-    } catch (err) {
+    } catch {
       toast.error("Failed to update auction");
     } finally {
       setSubmitting(false);
@@ -299,7 +303,7 @@ export default function AuctionSettingsPage({ params }: { params: Promise<{ id: 
       await deleteAuction(id);
       toast.success("Auction deleted successfully!");
       router.push("/auctions");
-    } catch (err) {
+    } catch {
       toast.error("Failed to delete auction");
     } finally {
       setSubmitting(false);
@@ -495,7 +499,7 @@ export default function AuctionSettingsPage({ params }: { params: Promise<{ id: 
                       variant="destructive"
                       onClick={() => {
                         setAdditionalImages(
-                          additionalImages.filter((_, i) => i !== index)
+                          additionalImages.filter((_, i) => i !== index),
                         );
                       }}
                     >

@@ -33,7 +33,6 @@ import {
   PopoverContent,
 } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
-import { format } from "date-fns";
 import Image from "next/image";
 
 const CLUTCH_OPTIONS = ["dual", "single"] as const;
@@ -117,13 +116,13 @@ export default function AddAuctionPage() {
 
   const [ipto, setIpto] = useState<string>("");
   const [clutch, setClutch] = useState<(typeof CLUTCH_OPTIONS)[number] | "">(
-    ""
+    "",
   );
   const [condition, setCondition] = useState<
     (typeof CONDITION_OPTIONS)[number] | ""
   >("");
   const [gearBox, setGearBox] = useState<(typeof GEARBOX_OPTIONS)[number] | "">(
-    ""
+    "",
   );
   const [steering, setSteering] = useState<
     (typeof STEERING_OPTIONS)[number] | ""
@@ -499,7 +498,7 @@ export default function AddAuctionPage() {
                         variant="destructive"
                         onClick={() => {
                           setAdditionalImages(
-                            additionalImages.filter((_, i) => i !== index)
+                            additionalImages.filter((_, i) => i !== index),
                           );
                         }}
                       >

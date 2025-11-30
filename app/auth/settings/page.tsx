@@ -309,12 +309,12 @@ export default function SettingsPage() {
     return "U";
   };
 
-   if (isPending)
-     return (
-       <div className="relative flex min-h-screen items-center justify-center">
-         <ReloadIcon className="h-8 w-8 animate-spin" />
-       </div>
-     );
+  if (isPending)
+    return (
+      <div className="relative flex min-h-screen items-center justify-center">
+        <ReloadIcon className="h-8 w-8 animate-spin" />
+      </div>
+    );
 
   if (!session?.user) {
     return (

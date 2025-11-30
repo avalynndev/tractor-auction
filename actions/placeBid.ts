@@ -28,7 +28,7 @@ export async function placeBid({ auctionId, userId, amount }: PlaceBidInput) {
 
     if (amount < minRequired) {
       throw new Error(
-        `Bid too low. Someone may have outbid you. Minimum required: ₹${minRequired}`
+        `Bid too low. Someone may have outbid you. Minimum required: ₹${minRequired}`,
       );
     }
 

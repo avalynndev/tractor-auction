@@ -2,7 +2,7 @@
 
 import { db } from "@/db";
 import { auction } from "@/schema";
-import { eq } from "drizzle-orm"; 
+import { eq } from "drizzle-orm";
 
 export async function updateAuction(id: string, values: any) {
   await db
@@ -15,5 +15,5 @@ export async function updateAuction(id: string, values: any) {
 }
 
 export async function deleteAuction(id: string) {
-  await db.delete(auction).where(eq(auction.id, id)); 
+  await db.delete(auction).where(eq(auction.id, id));
 }

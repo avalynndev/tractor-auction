@@ -127,7 +127,9 @@ export default function PlaceBidDialog({
         ) : (
           <>
             <Skeleton className="w-full h-14 rounded-md" />
-            <div className="text-sm font-bold text-destructive">Please signup to place a bid</div>
+            <div className="text-sm font-bold text-destructive">
+              Please signup to place a bid
+            </div>
           </>
         )}
       </CardContent>

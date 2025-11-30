@@ -5,7 +5,7 @@ import { AuthUIProvider } from "@daveyplate/better-auth-ui";
 import { useRouter } from "next/navigation";
 
 import { authClient } from "@/lib/auth-client";
-import {Link} from "next-view-transitions";
+import { Link } from "next-view-transitions";
 
 import type { ReactNode } from "react";
 
