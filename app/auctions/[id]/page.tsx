@@ -90,7 +90,6 @@ export default function AuctionDetails({
                 label="Tyre Condition"
                 value={item.tyrePercent ? `${item.tyrePercent}%` : null}
               />
-              <Spec label="Exp Year" value={item.expYear} />
             </div>
           </CardContent>
         </Card>

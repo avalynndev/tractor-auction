@@ -100,24 +100,20 @@ export default function AuctionSettingsPage({
 
   const { id } = React.use(params);
 
-  // Basic Info
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] =
     useState<(typeof CATEGORY_OPTIONS)[number]>("regular");
   const [brand, setBrand] = useState("");
 
-  // Images
   const [coverImage, setCoverImage] = useState<string | null>(null);
   const [additionalImages, setAdditionalImages] = useState<string[]>([]);
 
-  // Bidding Settings
   const [endingDate, setEndingDate] = useState<Date>();
   const [endingTime, setEndingTime] = useState<string>("");
   const [startingBid, setStartingBid] = useState("");
   const [minimumIncrement, setMinimumIncrement] = useState("");
 
-  // Tractor Specs
   const [clutch, setClutch] = useState<(typeof CLUTCH_OPTIONS)[number] | "">(
     "",
   );
@@ -132,7 +128,6 @@ export default function AuctionSettingsPage({
   const [hoursRun, setHoursRun] = useState("");
   const [registrationNumber, setRegistrationNumber] = useState("");
 
-  // Optional / Extras
   const [price, setPrice] = useState("");
   const [tyres, setTyres] = useState("");
   const [tyrePercent, setTyrePercent] = useState("");
@@ -141,7 +136,6 @@ export default function AuctionSettingsPage({
   const [expYear, setExpYear] = useState("");
   const [verified, setVerified] = useState(false);
 
-  // Checkboxes
   const [battery, setBattery] = useState(false);
   const [bumper, setBumper] = useState(false);
   const [drawBar, setDrawBar] = useState(false);

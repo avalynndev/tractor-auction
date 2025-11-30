@@ -90,7 +90,9 @@ export const auction = pgTable("auction", {
   image5: text("image5"),
   image6: text("image6"),
 
-  category: text("category").notNull(),
+  category: text("category", {
+    enum: ["regular", "harvester", "preapproved", "scrap"],
+  }).notNull(),
   brand: text("brand"),
 
   battery: boolean("battery"),

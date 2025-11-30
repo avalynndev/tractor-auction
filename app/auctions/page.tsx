@@ -3,8 +3,8 @@ import { desc, eq, and } from "drizzle-orm";
 import { db } from "@/db";
 import { auction } from "@/schema";
 import { Link } from "next-view-transitions";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
+import { Badge } from "@/components/ui/badge";
 
 export default async function AuctionsPage(props: {
   searchParams: Promise<any>;
@@ -89,33 +89,38 @@ export default async function AuctionsPage(props: {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-4">
           {auctions.map((item) => (
             <Link key={item.id} href={`/auctions/${item.id}`}>
-              <Card className="hover:shadow-xl transition duration-200 cursor-pointer">
-                <CardHeader>
-                  <CardTitle className="text-xl">{item.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="relative w-full h-40 mb-3 rounded-md overflow-hidden">
-                    <Image
-                      src={item.coverImage}
-                      alt={item.title}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
+              <div
+                key={item.id}
+                className="border duration-200 cursor-pointer rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all bg-card/40"
+              >
+                <div className="relative w-full h-50 rounded-t-md overflow-hidden">
+                  <Image
+                    src={item.coverImage}
+                    alt={item.title}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
 
-                  <p className="text-sm text-muted-foreground">
-                    Category:{" "}
-                    <span className="font-medium">{item.category}</span>
+                <div className="p-4 space-y-2">
+                  <p className="font-semibold text-lg">
+                    {item.title}{" "}
+                    <span className="text-sm text-muted-foreground">
+                      {`(${item.brand})`}
+                    </span>
                   </p>
                   <p className="text-sm text-muted-foreground">
-                    Clutch: <span className="font-medium">₹{item.clutch}</span>
+                    {item.description}
                   </p>
-                  <p className="text-sm text-muted-foreground">
-                    Current Bid:{" "}
-                    <span className="font-medium">{item.currentBid}</span>
-                  </p>
-                </CardContent>
-              </Card>
+
+                  <div className="flex justify-between items-center pt-2">
+                    <span className="text-primary font-bold">
+                      ₹ {item.currentBid}
+                    </span>
+                    <Badge>{new Date(item.endingAt).toLocaleString()}</Badge>
+                  </div>
+                </div>
+              </div>
             </Link>
           ))}
         </div>

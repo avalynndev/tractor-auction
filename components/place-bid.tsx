@@ -47,6 +47,7 @@ export default function PlaceBidDialog({
 
   useEffect(() => {
     reloadAuction();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [item.id]);
 
   async function submitBid() {
