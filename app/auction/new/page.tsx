@@ -33,7 +33,6 @@ import {
   PopoverContent,
 } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
-import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
 import Image from "next/image";
 
@@ -118,13 +117,13 @@ export default function AddAuctionPage() {
 
   const [ipto, setIpto] = useState<string>("");
   const [clutch, setClutch] = useState<(typeof CLUTCH_OPTIONS)[number] | "">(
-    "",
+    ""
   );
   const [condition, setCondition] = useState<
     (typeof CONDITION_OPTIONS)[number] | ""
   >("");
   const [gearBox, setGearBox] = useState<(typeof GEARBOX_OPTIONS)[number] | "">(
-    "",
+    ""
   );
   const [steering, setSteering] = useState<
     (typeof STEERING_OPTIONS)[number] | ""
@@ -142,6 +141,9 @@ export default function AddAuctionPage() {
   const [verified, setVerified] = useState(false);
   const [expYear, setExpYear] = useState("");
 
+  const [startingBid, setStartingBid] = useState("");
+  const [minimumIncrement, setMinimumIncrement] = useState("500");
+
   const [submitting, setSubmitting] = useState(false);
 
   const [additionalImages, setAdditionalImages] = useState<string[]>([]);
@@ -152,14 +154,25 @@ export default function AddAuctionPage() {
     if (!coverImage) return "Cover image is required";
     if (!category) return "Category is required";
     if (!clutch) return "Clutch selection is required";
+    if (!gearBox) return "GearBox selection is required";
     if (!condition) return "Condition selection is required";
     if (!steering) return "Steering selection is required";
     if (!drive) return "Drive selection is required";
     if (!horsepower.trim()) return "Horsepower is required";
     if (!hoursRun.trim()) return "Hours run is required";
     if (!registrationNumber.trim()) return "Registration number is required";
+    if (!endingDate || !endingTime) return "Ending date and time are required";
+    if (!startingBid.trim()) return "Starting bid is required";
+    if (!minimumIncrement.trim()) return "Minimum increment is required";
+
+    if (isNaN(Number(startingBid)) || Number(startingBid) <= 0)
+      return "Starting bid must be a positive number";
+    if (isNaN(Number(minimumIncrement)) || Number(minimumIncrement) <= 0)
+      return "Minimum increment must be a positive number";
+
     if ((category === "preapproved" || category === "scrap") && !price.trim())
       return "Price is required for preapproved/scrap";
+
     return null;
   };
 
@@ -167,11 +180,6 @@ export default function AddAuctionPage() {
     const err = validate();
     if (err) {
       toast.error(err);
-      return;
-    }
-
-    if (!endingDate || !endingTime) {
-      toast.error("Please select both date and time");
       return;
     }
 
@@ -198,12 +206,6 @@ export default function AddAuctionPage() {
         return;
       }
 
-      console.log("Final ending date:", finalEndingDate);
-      console.log("ISO string:", finalEndingDate.toISOString());
-
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      toast.success("Auction submitted successfully! 🚀");
       await createAuction({
         id: crypto.randomUUID(),
         userId: session!.user!.id,
@@ -242,6 +244,8 @@ export default function AddAuctionPage() {
         verified,
         expYear: expYear || null,
         endingAt: finalEndingDate,
+        startingBid: Number(startingBid),
+        minimumIncrement: Number(minimumIncrement),
       });
 
       setTitle("");
@@ -275,9 +279,11 @@ export default function AddAuctionPage() {
       setExpYear("");
       setEndingTime("");
       setEndingDate(undefined);
+      setStartingBid("");
+      setMinimumIncrement("500");
 
       router.refresh();
-      toast.success("Auction submitted successfully! 🚀");
+      toast.success("Auction created successfully! 🚀");
     } catch (err) {
       console.error(err);
       toast.error("Something went wrong. Try again.");
@@ -349,7 +355,7 @@ export default function AddAuctionPage() {
             </div>
 
             <div className="flex flex-col gap-2">
-              <label className="font-medium">Ending Date</label>
+              <label className="font-medium">Ending Date *</label>
 
               <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
                 <PopoverTrigger asChild>
@@ -383,7 +389,7 @@ export default function AddAuctionPage() {
             </div>
 
             <div className="flex flex-col gap-2">
-              <label className="font-medium">Ending Time</label>
+              <label className="font-medium">Ending Time *</label>
 
               <div className="relative">
                 <Input
@@ -397,6 +403,41 @@ export default function AddAuctionPage() {
             </div>
           </CardContent>
         </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Bidding Settings</CardTitle>
+            <CardDescription>
+              Configure starting bid and minimum bid increment.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="grid gap-4">
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="grid gap-2">
+                <Label>Starting Bid (₹) *</Label>
+                <Input
+                  type="number"
+                  value={startingBid}
+                  onChange={(e) => setStartingBid(e.target.value)}
+                  placeholder="e.g. 100000"
+                  min="1"
+                />
+              </div>
+
+              <div className="grid gap-2">
+                <Label>Minimum Increment (₹) *</Label>
+                <Input
+                  type="number"
+                  value={minimumIncrement}
+                  onChange={(e) => setMinimumIncrement(e.target.value)}
+                  placeholder="e.g. 500"
+                  min="1"
+                />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
         <Card>
           <CardHeader>
             <CardTitle>Images</CardTitle>
@@ -458,7 +499,7 @@ export default function AddAuctionPage() {
                         variant="destructive"
                         onClick={() => {
                           setAdditionalImages(
-                            additionalImages.filter((_, i) => i !== index),
+                            additionalImages.filter((_, i) => i !== index)
                           );
                         }}
                       >
@@ -543,7 +584,7 @@ export default function AddAuctionPage() {
               </div>
 
               <div className="grid gap-2">
-                <Label>Gear Box</Label>
+                <Label>Gear Box *</Label>
                 <Select
                   value={gearBox}
                   onValueChange={(v) => setGearBox(v as any)}

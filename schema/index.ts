@@ -59,6 +59,20 @@ export const user = pgTable("user", {
   mode: boolean("mode").notNull().default(false),
 });
 
+export const bids = pgTable("bids", {
+  id: text("id").primaryKey(),
+  auctionId: text("auction_id")
+    .notNull()
+    .references(() => auction.id, { onDelete: "cascade" }),
+
+  userId: text("user_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
+
+  amount: integer("amount").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
 export const auction = pgTable("auction", {
   id: text("id").primaryKey(),
   userId: text("user_id")
@@ -123,7 +137,9 @@ export const auction = pgTable("auction", {
   verified: boolean("verified"),
   expYear: text("exp_year"),
 
+  startingBid: integer("starting_bid").notNull(),
   currentBid: integer("current_bid").default(0),
+  minimumIncrement: integer("minimum_increment").default(500).notNull(),
 
   createdAt: timestamp("created_at").notNull(),
   updatedAt: timestamp("updated_at").notNull(),

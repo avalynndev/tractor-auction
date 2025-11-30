@@ -5,6 +5,9 @@ import { getAuction } from "@/actions/getAuction";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import React, { useEffect, useState } from "react";
+import { useSession } from "@/lib/auth-client";
+import { Skeleton } from "@/components/ui/skeleton";
+import { ReloadIcon } from "@radix-ui/react-icons";
 
 export default function AuctionDetails({
   params,
@@ -12,6 +15,7 @@ export default function AuctionDetails({
   params: Promise<{ id: string }>;
 }) {
   const [item, setItem] = useState<any>(null);
+  const { data: session } = useSession();
   const { id } = React.use(params);
 
   useEffect(() => {
@@ -22,7 +26,12 @@ export default function AuctionDetails({
     load();
   }, [id]);
 
-  if (!item) return <div className="p-6">Loading...</div>;
+  if (!item)
+    return (
+      <div className="relative flex h-[60vh] items-center justify-center">
+        <ReloadIcon className="h-8 w-8 animate-spin" />
+      </div>
+    );
 
   const images = [
     item.image1,
@@ -126,11 +135,11 @@ export default function AuctionDetails({
         <CardContent className="space-y-4">
           <div className="text-3xl font-bold">₹{item.currentBid || 0}</div>
 
-          <Button className="w-full py-6 text-lg">Place Bid</Button>
-
-          <Button variant="outline" className="w-full py-6 text-lg">
-            Buy Now
-          </Button>
+          {session?.user?.id ? (
+            <Button className="w-full py-6 text-lg">Place Bid</Button>
+          ) : (
+            <Skeleton className="w-full h-14 rounded-md" />
+          )}
         </CardContent>
       </Card>
     </div>

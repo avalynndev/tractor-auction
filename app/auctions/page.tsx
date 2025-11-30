@@ -80,7 +80,7 @@ export default async function AuctionsPage(props: {
   return (
     <>
       <div className="max-w-6xl mx-auto p-4 flex flex-col items-center justify-center">
-        <span className="tracking-tight text-center pointer-events-none mt-8 whitespace-pre-wrap bg-gradient-to-b from-black to-gray-300 bg-clip-text py-8 text-6xl font-semibold leading-none text-transparent dark:from-white dark:to-slate-900/10">
+        <span className="tracking-tight text-center pointer-events-none mt-8 whitespace-pre-wrap bg-linear-to-b from-black to-gray-300 bg-clip-text py-8 text-6xl font-semibold leading-none text-transparent dark:from-white dark:to-slate-900/10">
           Current Auctions
         </span>
 

@@ -32,18 +32,27 @@ export default function FooterSection({
   name = "Tractor Auction",
   columns = [
     {
-      title: "Links",
+      title: "Quick Link",
       links: [
+        { text: "How It works", href: "/how-it-works" },
         { text: "Home", href: "/" },
-        { text: "Admissions", href: "/main-campus/connect" },
-        { text: "Nutrition", href: "/main-campus/nutrition" },
-        { text: "Campus", href: "/main-campus/campus" },
+        { text: "Auctions", href: "/auctions" },
+        { text: "Contact", href: "/contact" },
+        { text: "Policy", href: "/policy" },
+      ],
+    },
+    {
+      title: "Socials",
+      links: [
+        { text: "Facebook", href: "/" },
+        { text: "Twitter", href: "/" },
+        { text: "LinkedIn", href: "/" },
       ],
     },
   ],
-  copyright = "© 2025 The Future Kid's School. All rights reserved.",
+  copyright = "© 2025 TractorAuction. All rights reserved.",
   policies = [
-    { text: "Privacy Policy", href: "/privacy-policy" },
+    { text: "Privacy Policy", href: "/policy/privacy-policy" },
     { text: "Sitemap", href: "/sitemap" },
   ],
   showModeToggle = true,
@@ -64,21 +73,28 @@ export default function FooterSection({
                 secure online auction platform. Join dealers nationwide in
                 finding the best deals
               </p>
-              <p>📞 +91 1110 280 911</p>
-              <p>📧 example@gmail.com</p>
+              <p>📞 +91 780 109 4747</p>
+              <p>📧 contact@tractorauction.in</p>
             </FooterColumn>
-            <FooterColumn className="md:col-start-4">
-              {columns[0].links.map((link, linkIndex) => (
-                <Link
-                  key={linkIndex}
-                  href={link.href}
-                  className="text-muted-foreground text-sm"
-                >
-                  {link.text}
-                </Link>
-              ))}
-            </FooterColumn>
+
+            {columns.map((col, colIndex) => (
+              <FooterColumn key={colIndex}>
+                <h4 className="font-semibold mb-2">{col.title}</h4>
+                <div className="flex flex-col gap-1">
+                  {col.links.map((link, linkIndex) => (
+                    <Link
+                      key={linkIndex}
+                      href={link.href}
+                      className="text-muted-foreground text-sm hover:underline"
+                    >
+                      {link.text}
+                    </Link>
+                  ))}
+                </div>
+              </FooterColumn>
+            ))}
           </FooterContent>
+
           <FooterBottom>
             <div>{copyright}</div>
             <div className="flex items-center gap-4">

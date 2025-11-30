@@ -52,8 +52,8 @@ export default function ContactPage() {
 
   return (
     <>
-      <section className="container max-w-container relative lg:pt-10 mx-auto rounded-3xl overflow-hidden">
-        <div className="relative h-[60vh] w-full flex flex-col justify-between rounded-3xl">
+      <section className="container max-w-container relative lg:pt-10 mx-auto rounded-3xl overflow-hidden px-4">
+        <div className="relative h-[30vh] md:h-[60vh] w-full flex flex-col justify-between rounded-3xl">
           <div className="absolute inset-0 rounded-3xl overflow-hidden">
             <FadeImage
               src="/page.webp"
