@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<center> <h1><a href="https://tractor-auction.vercel.app/"> tractor-auction</a> </h1></center>
 
-## Getting Started
+<p align="center">
+  <img src="https://skillicons.dev/icons?i=react,nextjs,tailwind,ts" />
+  <br/>
+  <a href=""><kbd>shadcn-ui</kbd></a>
+</p>
+<br/><br/>
 
-First, run the development server:
+# What is tractor-auction?
 
+A simple website where people can buy and sell tractors. Companies can add their tractors to the site, and buyers can bid on them to get the best deal. Think of it like an online auction but just for tractors.
+
+Here is the [video](https://www.youtube.com/watch?v=your-video-id) showing how it works.
+
+# What can you do?
+
+- **Buyers**: Look at tractors, place bids, buy what you need
+- **Sellers**: Add your tractors, set prices, sell to buyers
+- **Everyone**: See live bids and get updates right away
+
+# How to run it yourself
+
+### What you need
+
+- Node.js 20 or newer
+- npm or bun
+
+### Setup
+
+1. Download the code:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/avalynndev/tractor-auction.git
+cd tractor-auction
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install stuff:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Add your settings:
+```bash
+cp .env.example .env
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Then edit the `.env` file with your database and other info.
 
-## Learn More
+4. Start it up:
+```bash
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+5. Go to [http://localhost:3000](http://localhost:3000)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Make it live
+```bash
+npm run build
+npm start
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Favalynndev%2Ftractor-auction)
 
-## Deploy on Vercel
+## Notes
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Made for buying and selling tractors online
+- Built with React and Next.js
+- AI was used a bit for fixing bugs
+- Made during winter season
