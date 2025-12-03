@@ -11,7 +11,7 @@
 
 A simple website where people can buy and sell tractors. Companies can add their tractors to the site, and buyers can bid on them to get the best deal. Think of it like an online auction but just for tractors.
 
-Here is the [video](https://www.youtube.com/watch?v=your-video-id) showing how it works.
+Here is the [video](https://www.youtube.com/watch?v=ojLtPLRIXbs) showing how it works.
 
 # What can you do?
 
