@@ -12,7 +12,7 @@ const fromEmail = "TRACTORAUCTION <noreply@auth.newtech.dev>";
 
 export const auth = betterAuth({
   appName: "TractorAuction",
-  baseURL: process.env.BETTER_AUTH_URL || "http://localhost:3000",
+  baseURL: process.env.BETTER_AUTH_URL || "http://tractor-auction.vercel.app",
   emailAndPassword: {
     enabled: true,
     minPasswordLength: 8,
@@ -57,7 +57,7 @@ export const auth = betterAuth({
       enabled: true,
     },
   },
-  trustedOrigins: [process.env.BETTER_AUTH_URL || "http://localhost:3000"],
+  trustedOrigins: [process.env.BETTER_AUTH_URL || "http://tractor-auction.vercel.app"],
   plugins: [
     nextCookies(),
     username(),
