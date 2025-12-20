@@ -16,6 +16,8 @@ export default function AuctionDetails({
   params: Promise<{ id: string }>;
 }) {
   const [item, setItem] = useState<any>(null);
+  const [hasSubscription, setHasSubscription] = useState(false);
+  const [checkingSubscription, setCheckingSubscription] = useState(true);
   const { data: session } = useSession();
   const { id } = React.use(params);
 
@@ -26,6 +28,28 @@ export default function AuctionDetails({
     }
     load();
   }, [id]);
+
+  // Check subscription status
+  useEffect(() => {
+    async function checkSubscription() {
+      if (!session?.user?.id) {
+        setCheckingSubscription(false);
+        return;
+      }
+
+      try {
+        const response = await fetch("/api/subscription/check");
+        const data = await response.json();
+        setHasSubscription(data.hasSubscription);
+      } catch (error) {
+        console.error("Failed to check subscription:", error);
+      } finally {
+        setCheckingSubscription(false);
+      }
+    }
+
+    checkSubscription();
+  }, [session?.user?.id]);
 
   if (!item)
     return (
@@ -128,7 +152,12 @@ export default function AuctionDetails({
       </div>
 
       <div className="space-y-4 sticky h-fit top-4">
-        <PlaceBidDialog item={item} session={session} />
+        <PlaceBidDialog
+          item={item}
+          session={session}
+          hasSubscription={hasSubscription}
+          checkingSubscription={checkingSubscription}
+        />
 
         {session?.user?.id === item.userId && (
           <Link href={`/auction/${item.id}/settings`}>

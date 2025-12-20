@@ -4,6 +4,7 @@ import {
   integer,
   timestamp,
   boolean,
+  pgEnum,
 } from "drizzle-orm/pg-core";
 
 export const session = pgTable("session", {
@@ -145,6 +146,26 @@ export const auction = pgTable("auction", {
   createdAt: timestamp("created_at").notNull(),
   updatedAt: timestamp("updated_at").notNull(),
   endingAt: timestamp("ending_at").notNull(),
+});
+
+export const planEnum = pgEnum("plan_type", ["silver", "gold", "diamond"]);
+
+export const subscriptions = pgTable("subscriptions", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  userId: text("user_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
+  plan: planEnum("plan").notNull(),
+  stripePaymentIntentId: text("stripe_payment_intent_id"),
+  amount: integer("amount").notNull(), // in paise
+  currency: text("currency").notNull().default("inr"),
+  startDate: timestamp("start_date").notNull().defaultNow(),
+  endDate: timestamp("end_date").notNull(),
+  isActive: boolean("is_active").notNull().default(true),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
 
 export const schema = {
