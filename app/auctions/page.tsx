@@ -28,7 +28,6 @@ export default async function AuctionsPage(props: {
     hours_run,
     registration_number,
     ipto,
-    exp_year,
     battery,
     bumper,
     draw_bar,
@@ -58,7 +57,6 @@ export default async function AuctionsPage(props: {
   if (registration_number)
     filters.push(eq(auction.registrationNumber, registration_number));
   if (ipto) filters.push(eq(auction.ipto, ipto));
-  if (exp_year) filters.push(eq(auction.expYear, exp_year));
 
   if (battery === "true") filters.push(eq(auction.battery, true));
   if (bumper === "true") filters.push(eq(auction.bumper, true));
@@ -114,9 +112,11 @@ export default async function AuctionsPage(props: {
                   </p>
 
                   <div className="flex justify-between items-center pt-2">
-                    <span className="text-primary font-bold">
-                      ₹ {item.currentBid}
-                    </span>
+                    {item.category === "preapproved" && (
+                      <span className="text-primary font-bold">
+                        ₹ {item.currentBid}
+                      </span>
+                    )}
                     <Badge>{new Date(item.endingAt).toLocaleString()}</Badge>
                   </div>
                 </div>

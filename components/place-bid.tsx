@@ -86,8 +86,11 @@ export default function PlaceBidDialog({
       </CardHeader>
 
       <CardContent className="space-y-4">
-        <div className="text-3xl font-bold">₹{current}</div>
-
+        {item.category === "preapproved" ? (
+          <div className="text-3xl font-bold">₹ {current}</div>
+        ) : (
+          <div className="text-3xl font-bold">Hidden ₹</div>
+        )}
         {session?.user?.id ? (
           <Credenza open={open} onOpenChange={setOpen}>
             <CredenzaTrigger asChild>
@@ -100,10 +103,12 @@ export default function PlaceBidDialog({
               </CredenzaHeader>
 
               <CredenzaBody className="space-y-4 pb-6">
-                <p className="text-muted-foreground">
+                {/**
+                 <p className="text-muted-foreground">
                   Minimum allowed bid:
                   <span className="font-semibold"> ₹{minRequired}</span>
                 </p>
+ */}
 
                 <Input
                   type="number"
@@ -127,7 +132,6 @@ export default function PlaceBidDialog({
           </Credenza>
         ) : (
           <>
-            <Skeleton className="w-full h-14 rounded-md" />
             <div className="text-sm font-bold text-destructive">
               Please signup to place a bid
             </div>

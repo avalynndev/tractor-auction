@@ -75,7 +75,4 @@ vendor = the user who posted this
 (optional)
 verified = true/false
 
-(optional)
-exp date = year
-
 link them to a user. 

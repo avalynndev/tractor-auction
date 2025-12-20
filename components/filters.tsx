@@ -109,7 +109,6 @@ export function AuctionFilterSheet() {
     params.get("registration_number") || "",
   );
   const [ipto, setIpto] = useState(params.get("ipto") || "");
-  const [expYear, setExpYear] = useState(params.get("exp_year") || "");
 
   const [battery, setBattery] = useState(params.get("battery") === "true");
   const [bumper, setBumper] = useState(params.get("bumper") === "true");
@@ -146,7 +145,6 @@ export function AuctionFilterSheet() {
       hours_run: hoursRun,
       registration_number: registrationNumber,
       ipto,
-      exp_year: expYear,
     };
 
     Object.entries(fields).forEach(([key, val]) => {
@@ -261,7 +259,6 @@ export function AuctionFilterSheet() {
             onChange={setRegistrationNumber}
           />
           <InputField label="IPTO" value={ipto} onChange={setIpto} />
-          <InputField label="EXP Year" value={expYear} onChange={setExpYear} />
         </div>
 
         <div className="space-y-2">

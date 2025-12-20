@@ -137,7 +137,6 @@ export const auction = pgTable("auction", {
   state: text("state"),
 
   verified: boolean("verified"),
-  expYear: text("exp_year"),
 
   startingBid: integer("starting_bid").notNull(),
   currentBid: integer("current_bid").default(0),

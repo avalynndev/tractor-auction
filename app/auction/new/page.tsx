@@ -138,7 +138,6 @@ export default function AddAuctionPage() {
   const [tyrePercent, setTyrePercent] = useState("");
   const [state, setState] = useState<(typeof STATE_OPTIONS)[number] | "">("");
   const [verified, setVerified] = useState(false);
-  const [expYear, setExpYear] = useState("");
 
   const [startingBid, setStartingBid] = useState("");
   const [minimumIncrement, setMinimumIncrement] = useState("500");
@@ -241,7 +240,6 @@ export default function AddAuctionPage() {
         tyrePercent: tyrePercent || null,
         state: state || null,
         verified,
-        expYear: expYear || null,
         endingAt: finalEndingDate,
         startingBid: Number(startingBid),
         minimumIncrement: Number(minimumIncrement),
@@ -275,7 +273,6 @@ export default function AddAuctionPage() {
       setTyrePercent("");
       setState("");
       setVerified(false);
-      setExpYear("");
       setEndingTime("");
       setEndingDate(undefined);
       setStartingBid("");
@@ -754,16 +751,6 @@ export default function AddAuctionPage() {
                     <SelectItem value="no">No</SelectItem>
                   </SelectContent>
                 </Select>
-              </div>
-
-              <div className="grid gap-2">
-                <Label>Expiry Year</Label>
-                <Input
-                  type="text"
-                  value={expYear}
-                  onChange={(e) => setExpYear(e.target.value)}
-                  placeholder="e.g. 2025"
-                />
               </div>
 
               <div className="flex items-center gap-2">

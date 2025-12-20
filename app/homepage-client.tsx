@@ -52,31 +52,44 @@ export default function HomePageClient({ data }: any) {
               fees.
             </p>
           </div>
-
-          <div className="relative z-10 w-full px-4 pb-8 md:pb-12 lg:pb-16 flex justify-center bg-black/30 backdrop-blur-xl pt-10 rounded-b-3xl">
-            <div className="flex flex-col md:flex-row gap-4">
-              <Link href="/how-it-works">
+          <div
+            className="relative z-10 w-full px-4 pb-8 md:pb-12 lg:pb-16 
+flex justify-center bg-black/30 backdrop-blur-xl pt-10 rounded-b-3xl"
+          >
+            <div
+              className="flex flex-col md:flex-row 
+  items-center justify-center gap-4 w-full max-w-4xl"
+            >
+              <Link href="/how-it-works" className="w-full sm:w-auto">
                 <Button
                   variant="outline"
-                  className="rounded-full px-8 py-6 text-base flex items-center gap-2"
+                  className="w-full md:w-auto
+        rounded-full md:px-8 md:py-6 text-base 
+        flex items-center justify-center gap-2"
                 >
                   <Info className="w-5 h-5" />
                   How It Works
                 </Button>
               </Link>
-              <Link href="/auctions">
+
+              <Link href="/auctions" className="w-full sm:w-auto">
                 <Button
                   variant="default"
-                  className="rounded-full px-8 py-6 text-base flex items-center gap-2"
+                  className="w-full md:w-auto
+        rounded-full md:px-8 md:py-6 text-base 
+        flex items-center justify-center gap-2"
                 >
                   <Gavel className="w-5 h-5" />
                   Auctions
                 </Button>
               </Link>
-              <Link href="/auth/sign-up">
+
+              <Link href="/auth/sign-up" className="w-full sm:w-auto">
                 <Button
                   variant="outline"
-                  className="rounded-full px-8 py-6 text-base flex items-center gap-2"
+                  className="w-full md:w-auto
+        rounded-full md:px-8 md:py-6 text-base 
+        flex items-center justify-center gap-2"
                 >
                   <UserPlus className="w-5 h-5" />
                   Register
@@ -85,19 +98,32 @@ export default function HomePageClient({ data }: any) {
             </div>
           </div>
         </div>
-        <div className="mt-8 w-full max-w-4xl mx-auto flex gap-2">
+        <div
+          className="mt-8 w-full max-w-4xl mx-auto
+  flex flex-col sm:flex-row gap-3
+  bg-white/80 dark:bg-black/40 backdrop-blur-xl
+  rounded-2xl sm:rounded-full
+  p-2 shadow-lg"
+        >
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search tractors…"
-            className="flex-1 px-4 py-3 rounded-full bg-white/90 dark:bg-black/40 backdrop-blur-md text-black dark:text-white outline-none"
+            className="w-full sm:flex-1
+    px-5 py-3 bg-transparent
+    text-black dark:text-white
+    outline-none text-base sm:text-lg"
+            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
           />
+
           <Button
             onClick={handleSearch}
-            className="rounded-full h-12 has-[>svg]:px-4 px-6 py-3 flex items-center gap-2"
+            className="w-full sm:w-auto
+    rounded-full h-12 px-6
+    flex items-center justify-center gap-2"
           >
             <Search className="w-5 h-5" />
-            Search
+            <span className="hidden lg:block">Search</span>
           </Button>
         </div>
       </section>
@@ -137,7 +163,7 @@ function Categories({
     <div className="max-w-6xl mx-auto px-4">
       <h2 className="text-3xl font-bold text-center mb-10">Categories</h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-4xl mx-auto">
         {items.map((item, i) => (
           <div
             key={i}
@@ -204,9 +230,9 @@ function LiveAuctions({ auctions }: { auctions: any[] }) {
                 <span className="text-primary font-bold">₹ {a.currentBid}</span>
 
                 <Link href={`/auctions/${a.id}`}>
-                  <button className="px-3 py-1 rounded-full text-sm bg-primary text-white">
+                  <Button className="px-3 py-1 rounded-full text-sm bg-primary text-white">
                     Bid Now
-                  </button>
+                  </Button>
                 </Link>
               </div>
             </div>

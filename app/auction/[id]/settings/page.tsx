@@ -133,7 +133,6 @@ export default function AuctionSettingsPage({
   const [tyrePercent, setTyrePercent] = useState("");
   const [state, setState] = useState("");
   const [ipto, setIpto] = useState("");
-  const [expYear, setExpYear] = useState("");
   const [verified, setVerified] = useState(false);
 
   const [battery, setBattery] = useState(false);
@@ -195,7 +194,6 @@ export default function AuctionSettingsPage({
           setTyrePercent(data.tyrePercent || "");
           setState(data.state || "");
           setIpto(data.ipto || "");
-          setExpYear(data.expYear || "");
           setVerified(data.verified || false);
 
           setBattery(data.battery || false);
@@ -271,7 +269,6 @@ export default function AuctionSettingsPage({
         tyrePercent: tyrePercent || null,
         state: state || null,
         ipto: ipto || null,
-        expYear: expYear || null,
         verified,
         battery,
         bumper,
@@ -735,15 +732,6 @@ export default function AuctionSettingsPage({
               </Select>
             </div>
 
-            <div className="grid gap-2">
-              <Label>Expiry Year</Label>
-              <Input
-                type="text"
-                value={expYear}
-                onChange={(e) => setExpYear(e.target.value)}
-                placeholder="e.g. 2025"
-              />
-            </div>
 
             <div className="flex items-center gap-2">
               <Checkbox

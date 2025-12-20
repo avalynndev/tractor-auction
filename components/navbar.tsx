@@ -12,7 +12,18 @@ import {
 import { ThemeToggle } from "./theme-toggle";
 import { NavigationLinks } from "@/config/navigation";
 import { UserButton } from "@/components/user-button";
-
+import {
+  Phone,
+  MessageCircle,
+  ChevronUp,
+} from "lucide-react";
+import {
+  SiFacebook,
+  SiWhatsapp,
+  SiX,
+  SiInstagram,
+  SiYoutube,
+} from "@icons-pack/react-simple-icons"
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -29,6 +40,7 @@ const Navbar = () => {
   const [checked, setChecked] = useState<boolean | null>(null);
   const [isCooldown, setIsCooldown] = useState(false);
   const [tooltip, setTooltip] = useState("");
+  const [openSocials, setOpenSocials] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
   const { data: session } = useSession();
@@ -110,7 +122,7 @@ const Navbar = () => {
                 href="/"
                 className="flex items-center gap-2 text-md md:text-xl font-bold"
               >
-                <FadeImage src="/logo.svg" alt="Logo" width={36} height={36} />
+                <FadeImage src="/logo.png" alt="Logo" width={40} height={40} />
                 <span className="hidden md:inline">Tractor Auction</span>
               </Link>
             </nav>
@@ -187,10 +199,10 @@ const Navbar = () => {
                           className="flex items-center gap-2 text-lg font-semibold"
                         >
                           <FadeImage
-                            src="/logo.svg"
+                            src="/logo.png"
                             alt="Logo"
-                            width={32}
-                            height={32}
+                            width={46}
+                            height={46}
                           />
                           Tractor Auction
                         </Link>
@@ -250,6 +262,74 @@ const Navbar = () => {
           </nav>
         </div>
       </header>
+      <div className="fixed bottom-4 right-4 z-9999 flex flex-col items-center gap-2">
+        <a
+          href="tel:+919876543210"
+          className="flex h-11 w-11 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg hover:scale-105 transition"
+          aria-label="Call"
+        >
+          <Phone className="h-5 w-5" />
+        </a>
+
+        <a
+          href="https://wa.me/919876543210"
+          target="_blank"
+          className="flex h-11 w-11 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg hover:scale-105 transition"
+          aria-label="WhatsApp"
+        >
+          <SiWhatsapp className="h-5 w-5" />
+        </a>
+
+        <div
+          className={`flex flex-col items-center gap-2 overflow-hidden transition-all duration-300 ${
+            openSocials ? "max-h-100 opacity-100" : "max-h-0 opacity-0"
+          }`}
+        >
+          <a
+            href="https://facebook.com"
+            target="_blank"
+            className="flex h-11 w-11 items-center justify-center rounded-full bg-[#0866FF] text-white shadow-lg hover:scale-105 transition"
+          >
+            <SiFacebook className="h-5 w-5" />
+          </a>
+
+          <a
+            href="https://youtube.com"
+            target="_blank"
+            className="flex h-11 w-11 items-center justify-center rounded-full bg-[#FF0000] text-white shadow-lg hover:scale-105 transition"
+          >
+            <SiYoutube className="h-5 w-5" />
+          </a>
+
+          <a
+            href="https://instagram.com"
+            target="_blank"
+            className="flex h-11 w-11 items-center justify-center rounded-full bg-[#FF0069] text-white shadow-lg hover:scale-105 transition"
+          >
+            <SiInstagram className="h-5 w-5" />
+          </a>
+
+          <a
+            href="https://x.com"
+            target="_blank"
+            className="flex h-11 w-11 items-center justify-center rounded-full bg-[#000000] text-white shadow-lg hover:scale-105 transition"
+          >
+            <SiX className="h-5 w-5" />
+          </a>
+        </div>
+
+        <button
+          onClick={() => setOpenSocials(!openSocials)}
+          className="flex h-10 w-10 items-center justify-center rounded-full bg-muted text-foreground shadow-md hover:scale-105 transition"
+          aria-label="Toggle social links"
+        >
+          <ChevronUp
+            className={`h-5 w-5 transition-transform ${
+              openSocials ? "rotate-180" : ""
+            }`}
+          />
+        </button>
+      </div>
 
       <div className="max-w-[300px] sticky top-4 z-50 mx-auto hidden items-center justify-center p-3 lg:flex">
         <nav
