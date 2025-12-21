@@ -49,7 +49,7 @@ export default function SignUp() {
         setError(result.error.message || "Sign up failed");
       } else {
         toast.success("Account created successfully! 🎉");
-        router.push("/dashboard");
+        router.push("/auctions");
       }
     } catch (err) {
       setError("An unexpected error occurred");
@@ -131,7 +131,7 @@ export default function SignUp() {
                       type="button"
                       variant="ghost"
                       size="sm"
-                      className="absolute top-0 right-0 h-9 w-9 !bg-transparent hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50"
+                      className="absolute top-0 right-0 h-9 w-9 bg-transparent! hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50"
                       onClick={togglePasswordVisibility}
                       disabled={isLoading}
                     >

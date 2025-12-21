@@ -52,7 +52,7 @@ export default function SignIn() {
         setError(result.error.message || "Sign in failed");
       } else {
         toast.success("Succesfully signed In! 🎉");
-        router.push("/");
+        router.push("/auctions");
       }
     } catch (err) {
       setError("An unexpected error occurred");
