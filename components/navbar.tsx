@@ -12,7 +12,7 @@ import {
 import { ThemeToggle } from "./theme-toggle";
 import { NavigationLinks } from "@/config/navigation";
 import { UserButton } from "@/components/user-button";
-import { Phone, MessageCircle, ChevronUp } from "lucide-react";
+import { Phone, ChevronUp } from "lucide-react";
 import {
   SiFacebook,
   SiWhatsapp,
