@@ -12,8 +12,8 @@ export async function getUserSubscription(userId: string) {
       and(
         eq(subscriptions.userId, userId),
         eq(subscriptions.isActive, true),
-        gte(subscriptions.endDate, new Date())
-      )
+        gte(subscriptions.endDate, new Date()),
+      ),
     )
     .orderBy(subscriptions.endDate)
     .limit(1);
@@ -51,7 +51,7 @@ export async function getSubscriptionDetails(userId: string) {
 
   const now = new Date();
   const daysRemaining = Math.ceil(
-    (subscription.endDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)
+    (subscription.endDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24),
   );
 
   return {

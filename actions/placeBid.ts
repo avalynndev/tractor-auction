@@ -17,7 +17,7 @@ export async function placeBid({ auctionId, userId, amount }: PlaceBidInput) {
 
   if (!hasSubscription) {
     throw new Error(
-      "You need an active subscription to place bids. Please upgrade your plan to continue."
+      "You need an active subscription to place bids. Please upgrade your plan to continue.",
     );
   }
 
@@ -42,7 +42,7 @@ export async function placeBid({ auctionId, userId, amount }: PlaceBidInput) {
 
     if (amount < minRequired) {
       throw new Error(
-        `Bid too low. Someone may have outbid you. Minimum required: ₹${minRequired.toLocaleString("en-IN")}`
+        `Bid too low. Someone may have outbid you. Minimum required: ₹${minRequired.toLocaleString("en-IN")}`,
       );
     }
 

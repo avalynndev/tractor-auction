@@ -12,18 +12,14 @@ import {
 import { ThemeToggle } from "./theme-toggle";
 import { NavigationLinks } from "@/config/navigation";
 import { UserButton } from "@/components/user-button";
-import {
-  Phone,
-  MessageCircle,
-  ChevronUp,
-} from "lucide-react";
+import { Phone, MessageCircle, ChevronUp } from "lucide-react";
 import {
   SiFacebook,
   SiWhatsapp,
   SiX,
   SiInstagram,
   SiYoutube,
-} from "@icons-pack/react-simple-icons"
+} from "@icons-pack/react-simple-icons";
 import {
   DropdownMenu,
   DropdownMenuTrigger,

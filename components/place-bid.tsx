@@ -170,7 +170,7 @@ export default function PlaceBidDialog({
                 <Input
                   type="number"
                   placeholder={`Enter at least ₹${minRequired.toLocaleString(
-                    "en-IN"
+                    "en-IN",
                   )}`}
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}

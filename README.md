@@ -29,17 +29,20 @@ Here is the [video](https://www.youtube.com/watch?v=ojLtPLRIXbs) showing how it 
 ### Setup
 
 1. Download the code:
+
 ```bash
 git clone https://github.com/avalynndev/tractor-auction.git
 cd tractor-auction
 ```
 
 2. Install stuff:
+
 ```bash
 npm install
 ```
 
 3. Add your settings:
+
 ```bash
 cp .env.example .env
 ```
@@ -47,6 +50,7 @@ cp .env.example .env
 Then edit the `.env` file with your database and other info.
 
 4. Start it up:
+
 ```bash
 npm run dev
 ```
@@ -54,6 +58,7 @@ npm run dev
 5. Go to [http://localhost:3000](http://localhost:3000)
 
 ### Make it live
+
 ```bash
 npm run build
 npm start

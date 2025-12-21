@@ -26,12 +26,10 @@ export default function CanceledPage() {
           </p>
 
           <Alert className="mb-8">
-            <AlertTitle>
-                Need Help?
-            </AlertTitle>
+            <AlertTitle>Need Help?</AlertTitle>
             <AlertDescription>
-                If you encountered any issues during
-              checkout, please contact our support team.
+              If you encountered any issues during checkout, please contact our
+              support team.
             </AlertDescription>
           </Alert>
 

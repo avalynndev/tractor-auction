@@ -732,7 +732,6 @@ export default function AuctionSettingsPage({
               </Select>
             </div>
 
-
             <div className="flex items-center gap-2">
               <Checkbox
                 checked={verified}

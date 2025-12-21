@@ -57,7 +57,9 @@ export const auth = betterAuth({
       enabled: true,
     },
   },
-  trustedOrigins: [process.env.BETTER_AUTH_URL || "https://tractor-auction.vercel.app"],
+  trustedOrigins: [
+    process.env.BETTER_AUTH_URL || "https://tractor-auction.vercel.app",
+  ],
   plugins: [
     nextCookies(),
     username(),
